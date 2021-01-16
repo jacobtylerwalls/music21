@@ -43,7 +43,7 @@ def main(testGroup=('test',), restoreEnvironmentDefaults=False, limit=None, verb
     >>> print(None)
     None
     '''
-    commonTest.testImports()
+    # commonTest.testImports()
     s1 = commonTest.defaultDoctestSuite(__name__)
 
     modGather = commonTest.ModuleGather()
@@ -56,6 +56,8 @@ def main(testGroup=('test',), restoreEnvironmentDefaults=False, limit=None, verb
     # print(dir(sortMods[0]))
 
     for moduleObject in sortMods:
+        if 'lily' in repr(moduleObject):
+            continue
         unitTestCases = []
         if limit is not None:
             if totalModules > limit:
