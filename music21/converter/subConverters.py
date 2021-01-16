@@ -191,7 +191,10 @@ class SubConverter:
                 cmd = ('open', '-a', str(app), str(filePath))
         else:
             raise SubConverterException(f'Cannot launch files on {platform}')
-        subprocess.run(cmd, check=True)
+        try:
+            subprocess.run(cmd, check=True)
+        except:
+            raise ValueError(cmd)
 
     def show(self, obj, fmt, app=None, subformats=None, **keywords):
         '''
