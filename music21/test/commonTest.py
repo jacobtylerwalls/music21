@@ -35,11 +35,11 @@ environLocal = environment.Environment('test.commonTest')
 
 
 # noinspection PyPackageRequirements
-'''
+
 def testImports():
-    
+    '''
     Test that all optional packages needed for test suites are installed
-    
+    '''
     try:
         import scipy  # pylint: disable=unused-import
     except ImportError as e:
@@ -55,7 +55,7 @@ def testImports():
         LilypondConverter()
     except LilyTranslateException as e:
         raise ImportError('lilypond must be installed to run test suites') from e
-'''
+
 def defaultDoctestSuite(name=None):
     globs = __import__('music21').__dict__.copy()
     docTestOptions = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
