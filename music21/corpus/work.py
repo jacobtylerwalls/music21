@@ -76,6 +76,7 @@ class DirectoryInformation(prebase.ProtoM21Object):
                 fileStub = fileStub[len(os.sep):]
             # break into file components
             fileComponents = fileStub.split(os.sep)
+            raise ValueError((fileComponents, fileStub, path, path.as_posix()))
             # the first is either a directory for containing components
             # or a top-level name
             m21Format, ext = common.findFormatExtFile(fileComponents[-1])
