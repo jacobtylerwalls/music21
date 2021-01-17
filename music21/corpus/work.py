@@ -45,25 +45,24 @@ class DirectoryInformation(prebase.ProtoM21Object):
 
     def findWorks(self):
         '''
-        populate other information about the directory such as
+        Populate other information about the directory such as
         files and filenames.
-
 
         >>> di = corpus.work.DirectoryInformation('schoenberg',
         ...             corpusObject=corpus.corpora.CoreCorpus())
         >>> di.findWorks()
-        OrderedDict([(...'opus19', CorpusWork(title='Opus 19',
-                                       files=[CorpusFile(path='schoenberg/opus19/movement2.mxl',
-                                                         title='Movement 2',
-                                                         filename='movement2.mxl',
-                                                         format='musicxml',
-                                                         ext='.mxl'),
-                                              CorpusFile(path='schoenberg/opus19/movement6.mxl',
-                                                         title='Movement 6',
-                                                         filename='movement6.mxl',
-                                                         format='musicxml',
-                                                         ext='.mxl')],
-                                        virtual=False))])
+        OrderedDict([('opus19', CorpusWork(title='Opus 19',
+                                    files=[CorpusFile(path='schoenberg...opus19...movement2.mxl',
+                                                        title='Movement 2',
+                                                        filename='movement2.mxl',
+                                                        format='musicxml',
+                                                        ext='.mxl'),
+                                            CorpusFile(path='schoenberg...opus19...movement6.mxl',
+                                                        title='Movement 6',
+                                                        filename='movement6.mxl',
+                                                        format='musicxml',
+                                                        ext='.mxl')],
+                                    virtual=False))])
         '''
         self.works.clear()
         works = self.corpusObject.getComposer(self.directoryName)
