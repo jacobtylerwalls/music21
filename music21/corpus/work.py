@@ -72,11 +72,11 @@ class DirectoryInformation(prebase.ProtoM21Object):
             # split by the composer dir to get relative path
             # environLocal.printDebug(['dir composer', composerDirectory, path])
             junk, fileStub = path.as_posix().split(self.directoryName)
-            if fileStub.startswith(os.sep):
-                fileStub = fileStub[len(os.sep):]
+            # as_posix() means we are dealing with unix-style separators
+            if fileStub.startswith('/'):
+                fileStub = fileStub[1:]
             # break into file components
-            fileComponents = fileStub.split(os.sep)
-            raise ValueError((fileComponents, fileStub, path, path.as_posix()))
+            fileComponents = fileStub.split('/')
             # the first is either a directory for containing components
             # or a top-level name
             m21Format, ext = common.findFormatExtFile(fileComponents[-1])
