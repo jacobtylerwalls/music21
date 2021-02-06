@@ -304,8 +304,10 @@ class Timer:
     '''
     An object for timing. Call it to get the current time since starting.
 
+    >>> import time
     >>> t = common.Timer()
     >>> now = t()
+    >>> time.sleep(0.01)
     >>> nowNow = t()
     >>> nowNow > now
     True
