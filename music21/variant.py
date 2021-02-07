@@ -232,7 +232,7 @@ def mergeVariantScores(aScore, vScore, variantName='variant', *, inPlace=False):
     if inPlace is True:
         returnObj = aScore
     else:
-        returnObj = copy.deepcopy(aScore)
+        returnObj = aScore.coreCopyAsDerivation('mergeVariantScores')
 
     for returnPart, vPart in zip(returnObj.parts, vScore.parts):
         mergeVariantMeasureStreams(returnPart, vPart, variantName, inPlace=True)
@@ -395,7 +395,7 @@ def mergeVariantMeasureStreams(streamX, streamY, variantName='variant', *, inPla
     if inPlace is True:
         returnObj = streamX
     else:
-        returnObj = copy.deepcopy(streamX)
+        returnObj = streamX.coreCopyAsDerivation('mergeVariantMeasureStreams')
 
     regions = _getRegionsFromStreams(returnObj, streamY)
     for (regionType, xRegionStartMeasure, xRegionEndMeasure,
@@ -648,7 +648,7 @@ def mergeVariantsEqualDuration(streams, variantNames, *, inPlace=False):
     if inPlace is True:
         returnObj = streams[0]
     else:
-        returnObj = copy.deepcopy(streams[0])
+        returnObj = streams[0].coreCopyAsDerivation('mergeVariantsEqualDuration')
 
     # Adds a None element at beginning (corresponding to default variant streams[0])
     variantNames.insert(0, None)
@@ -801,7 +801,7 @@ def mergePartAsOssia(mainPart, ossiaPart, ossiaName,
     if inPlace is True:
         returnObj = mainPart
     else:
-        returnObj = copy.deepcopy(mainPart)
+        returnObj = mainPart.coreCopyAsDerivation('mergePartAsOssia')
 
     if compareByMeasureNumber is True:
         for ossiaMeasure in ossiaPart.getElementsByClass('Measure'):
@@ -1053,7 +1053,7 @@ def refineVariant(s, sVariant, *, inPlace=False):
     else:
         sVariantIndex = s.variants.index(sVariant)
 
-        returnObject = copy.deepcopy(s)
+        returnObject = s.coreCopyAsDerivation('refineVariant')
         variantRegion = returnObject.variants(sVariantIndex)
 
 
