@@ -85,6 +85,7 @@ memorization" (BMTM, 71). Some of these keywords are changed automatically in co
 import re
 import unittest
 
+from typing import Optional
 
 from music21 import exceptions21
 from music21 import metadata
@@ -145,19 +146,29 @@ def objectToBraille(music21Obj, **keywords):
 
 def streamToBraille(music21Stream, **keywords):
     '''
-    Translates a :class:`~music21.stream.Stream` to braille.
+    Translates a :class:`~music21.stream.Measure`.
+    :class:`~music21.stream.Part`,
+    :class:`~music21.stream.Score`, or
+    :class:`~music21.stream.Opus` to braille.
+
+    Note: generic :class:`~music21.stream.Stream` instances are not supported.
     '''
     if isinstance(music21Stream, stream.Part):
         return partToBraille(music21Stream, **keywords)
     elif isinstance(music21Stream, stream.Measure):
         return measureToBraille(music21Stream, **keywords)
-    keyboardParts = music21Stream.getElementsByClass(stream.PartStaff)
-    if len(keyboardParts) == 2:
-        return keyboardPartsToBraille(music21Stream, **keywords)
     elif isinstance(music21Stream, stream.Score):
         return scoreToBraille(music21Stream, **keywords)
     elif isinstance(music21Stream, stream.Opus):
         return opusToBraille(music21Stream, **keywords)
+    # Prior to v.7, generic `Stream` instances containing two and only two stream.PartStaff
+    # objects representing one keyboard instrument were permitted.
+    # The following call maintains backward compatibility,
+    # even though this functionality is not documented or promised.
+    keyboardParts = music21Stream.getElementsByClass(stream.PartStaff)
+    if len(keyboardParts) == 2:
+        return scoreToBraille(music21Stream)
+
     raise BrailleTranslateException('Stream cannot be translated to Braille.')
 
 
@@ -168,9 +179,25 @@ def scoreToBraille(music21Score, **keywords):
     allBrailleLines = []
     for music21Metadata in music21Score.getElementsByClass(metadata.Metadata):
         allBrailleLines.append(metadataToString(music21Metadata, returnBrailleUnicode=True))
-    for p in music21Score.getElementsByClass(stream.Part):
-        braillePart = partToBraille(p, **keywords)
-        allBrailleLines.append(braillePart)
+
+    unprocessed_partStaff: Optional[stream.PartStaff] = None
+    for p in music21Score.getElementsByClass(stream.Part):  # also finds stream.PartStaff
+        if 'PartStaff' in p.classes:
+            if unprocessed_partStaff is not None:
+                keyboard_parts = keyboardPartsToBraille(
+                    stream.Score([unprocessed_partStaff, p]), **keywords)
+                allBrailleLines.append(keyboard_parts)
+                unprocessed_partStaff = None
+            else:
+                unprocessed_partStaff = p
+                continue
+        else:
+            if unprocessed_partStaff is not None:
+                braillePart = partToBraille(unprocessed_partStaff, **keywords)
+                allBrailleLines.append(braillePart)
+                unprocessed_partStaff = None
+            braillePart = partToBraille(p, **keywords)
+            allBrailleLines.append(braillePart)
     return '\n'.join(allBrailleLines)
 
 
