@@ -135,6 +135,7 @@ def setGroupingGlobals():
         # noinspection PyTypeChecker
         GROUPING_GLOBALS['timeSignature'] = meter.TimeSignature('4/4')
 
+
 SEGMENT_MAXNOTESFORSHORTSLUR = 4
 
 MAX_ELEMENTS_IN_SEGMENT = 48  # 8 measures of 6 notes, etc. each
@@ -1507,12 +1508,12 @@ def findSegments(music21Part,
 
         # Segment Attributes
         # ------------------
-        seg.cancelOutgoingKeySig=cancelOutgoingKeySig
-        seg.dummyRestLength=dummyRestLength
-        seg.showFirstMeasureNumber=showFirstMeasureNumber
-        seg.showHand=showHand
-        seg.showHeading=showHeading
-        seg.suppressOctaveMarks=suppressOctaveMarks
+        seg.cancelOutgoingKeySig = cancelOutgoingKeySig
+        seg.dummyRestLength = dummyRestLength
+        seg.showFirstMeasureNumber = showFirstMeasureNumber
+        seg.showHand = showHand
+        seg.showHeading = showHeading
+        seg.suppressOctaveMarks = suppressOctaveMarks
 
         # Articulations
         # -------------
