@@ -199,7 +199,8 @@ class Harmony(chord.Chord):
         self.chordStepModifications = []
         self._degreesList = []
         self._key = None
-        self._updateBasedOnXMLInput(keywords)
+        # senseless to parse inversion until chord members are populated
+        self._updateBasedOnXMLInput(keywords, parseInversion=False)
         # figure is the string representation of a Harmony object
         # for example, for Chord Symbols the figure might be 'Cm7'
         # for roman numerals, the figure might be 'I7'
@@ -242,7 +243,7 @@ class Harmony(chord.Chord):
         '''
         return
 
-    def _updateBasedOnXMLInput(self, keywords):
+    def _updateBasedOnXMLInput(self, keywords, *, parseInversion=True):
         '''
         This method must be called twice, once before the pitches
         are rendered, and once after. This is because after the pitches
@@ -250,20 +251,22 @@ class Harmony(chord.Chord):
         but we want the objects to retain their initial root, bass, and inversion
         '''
         for kw in keywords:
+            if not keywords[kw]:
+                continue
             if kw == 'root':
                 if isinstance(keywords[kw], str):
                     keywords[kw] = common.cleanedFlatNotation(keywords[kw])
-                    self.root(pitch.Pitch(keywords[kw]))
+                    self.root(pitch.Pitch(keywords[kw], octave=3))
                 else:
                     self.root(keywords[kw])
             elif kw == 'bass':
                 if isinstance(keywords[kw], str):
                     keywords[kw] = common.cleanedFlatNotation(keywords[kw])
-                    self.bass(pitch.Pitch(keywords[kw]))
+                    self.bass(pitch.Pitch(keywords[kw], octave=3))
                 else:
                     self.bass(keywords[kw])
-            elif kw == 'inversion':
-                self.inversion(int(keywords[kw]), transposeOnSet=False)
+            elif kw == 'inversion' and parseInversion:
+                self.inversion(int(keywords[kw]), transposeOnSet=True)
             elif kw in ('duration', 'quarterLength'):
                 self.duration = duration.Duration(keywords[kw])
             else:
@@ -1561,6 +1564,8 @@ class ChordSymbol(Harmony):
         super().__init__(figure, **keywords)
         if 'duration' not in keywords and 'quarterLength' not in keywords:
             self.duration = duration.Duration(0)
+        if self.chordKind or self.chordKindStr:
+            self._updatePitches()
 
     # PRIVATE METHODS #
 
