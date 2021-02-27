@@ -4498,7 +4498,6 @@ class MeasureParser(XMLParserBase):
         '''
         # TODO: offset
         # staff is covered by insertCoreAndReference
-
         b: Optional[pitch.Pitch] = None
         r: Optional[pitch.Pitch] = None
         inversion: str = ''
