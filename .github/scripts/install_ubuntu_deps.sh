@@ -5,8 +5,8 @@ set -e  # error if anything returns non-zero exit code
 mkdir ~/Desktop
 
 sudo apt-get install -y libpng-dev
-sudo apt-get install -y python3-qt4
-wget -q http://lilypond.org/downloads/binaries/linux-64/lilypond-2.19.83-1.linux-64.sh
+# sudo apt-get install -y python3-qt4
+wget -q https://lilypond.org/download/binaries/linux-64/lilypond-2.22.0-1.linux-64.sh
 sh lilypond-2.19.83-1.linux-64.sh --batch
 export PATH=/home/runner/bin:$PATH
 pip3 install -r requirements.txt
