@@ -19,6 +19,7 @@ import fractions
 import io
 import math
 import unittest
+import warnings
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 from typing import List, Optional, Union
@@ -50,6 +51,7 @@ from music21.musicxml import helpers
 from music21.musicxml.partStaffExporter import PartStaffExporterMixin
 from music21.musicxml import xmlObjects
 from music21.musicxml.xmlObjects import MusicXMLExportException
+from music21.musicxml.xmlObjects import MusicXMLWarning
 
 from music21 import environment
 _MOD = "musicxml.m21ToXml"
@@ -309,8 +311,14 @@ class GeneralObjectExporter:
 
     def parse(self, obj=None):
         r'''
-        return a bytes object representation of anything from a
+        Return a bytes object representation of anything from a
         Score to a single pitch.
+
+        Wrap `obj` in a well-formed stream (using
+        :meth:`parseWellFormedObject`), making a copy and making notation
+        along the way. To skip these steps, see configuration options on
+        :meth:`parseWellFormedObject` or just pass `makeNotation=False` to
+        :meth:`~music21.base.Music21Object.show`.
 
         >>> p = pitch.Pitch('D#4')
         >>> GEX = musicxml.m21ToXml.GeneralObjectExporter(p)
@@ -373,16 +381,28 @@ class GeneralObjectExporter:
         if obj is None:
             obj = self.generalObj
         outObj = self.fromGeneralObject(obj)
-        # TODO: set whether to do an additional score copy in submethods.
         return self.parseWellformedObject(outObj)
 
-    def parseWellformedObject(self, sc):
+    def parseWellformedObject(self, sc, *, makeNotation: bool = True) -> bytes:
         '''
-        parse an object that has already gone through the
-        `.fromGeneralObject` conversion.  Returns bytes.
+        Parse an object that has usually already gone through the
+        `.fromGeneralObject` conversion, which has produced a copy with
+        :meth:`~music21.stream.Score.makeNotation` run on it.
+
+        `makeNotation=True` (default) runs :meth:`~music21.stream.makeNotation`
+        on each of the parts, this time without making a copy, possibly leaving
+        side effects on `sc`.
+
+        Set `makeNotation=False` to avoid making notation.
+
+        Returns bytes.
         '''
+        if not sc.isWellFormedNotation():
+            warnings.warn(f'{sc} is not well-formed; see isWellFormedNotation()',
+                category=MusicXMLWarning)
+
         scoreExporter = ScoreExporter(sc)
-        scoreExporter.parse()
+        scoreExporter.parse(makeNotation=makeNotation)
         return scoreExporter.asBytes()
 
     def fromGeneralObject(self, obj):
@@ -419,7 +439,7 @@ class GeneralObjectExporter:
 
     def fromScore(self, sc):
         '''
-        the best one of all -- a perfectly made Score (or something like that)
+        Copies the input score and runs :meth:`~music21.stream.Score.makeNotation` on the copy.
         '''
         scOut = sc.makeNotation(inPlace=False)
         # scOut.makeImmutable()
@@ -427,7 +447,7 @@ class GeneralObjectExporter:
 
     def fromPart(self, p):
         '''
-        from a part, put it in a score...
+        From a part, put it in a new score.
         '''
         if p.isFlat:
             p = p.makeMeasures()
@@ -1358,7 +1378,7 @@ class ScoreExporter(XMLExporterBase, PartStaffExporterMixin):
 
         self.parts = []
 
-    def parse(self):
+    def parse(self, makeNotation: bool = True):
         '''
         the main function to call.
 
@@ -1381,9 +1401,9 @@ class ScoreExporter(XMLExporterBase, PartStaffExporterMixin):
         self.scorePreliminaries()
 
         if s.hasPartLikeStreams():
-            self.parsePartlikeScore()
+            self.parsePartlikeScore(makeNotation=makeNotation)
         else:
-            self.parseFlatScore()
+            self.parseFlatScore(makeNotation=makeNotation)
 
         self.postPartProcess()
 
@@ -1540,31 +1560,25 @@ class ScoreExporter(XMLExporterBase, PartStaffExporterMixin):
         self.scoreLayouts = scoreLayouts
         self.firstScoreLayout = scoreLayout
 
-    def parsePartlikeScore(self):
+    def parsePartlikeScore(self, makeNotation: bool = True):
         '''
-        called by .parse() if the score has individual parts.
+        Called by .parse() if the score has individual parts.
 
-        Calls makeRests() for the part, then creates a PartExporter for each part,
-        and runs .parse() on that part.  appends the PartExporter to self.partExporterList
+        Calls makeRests() for the part (if `makeNotation=True`),
+        then creates a `PartExporter` for each part, and runs .parse() on that part.
+        Appends the PartExporter to `self.partExporterList`.
         '''
-        # would like to do something like this but cannot
-        # replace object inside of the stream
-        sp = list(self.parts)
-        for innerStream in sp:
-            innerStream.makeRests(self.refStreamOrTimeRange, inPlace=True)
+        if makeNotation:
+            for innerStream in self.parts:
+                innerStream.makeRests(self.refStreamOrTimeRange, inPlace=True)
 
-        count = 0
-        for innerStream in sp:
-            count += 1
-            if count > len(sp):
-                raise MusicXMLExportException('infinite stream encountered')
-
+        for innerStream in self.parts:
             pp = PartExporter(innerStream, parent=self)
             pp.spannerBundle = self.spannerBundle
             pp.parse()
             self.partExporterList.append(pp)
 
-    def parseFlatScore(self):
+    def parseFlatScore(self, makeNotation: bool = True):
         '''
         creates a single PartExporter for this Stream and parses it.
 
@@ -1587,7 +1601,7 @@ class ScoreExporter(XMLExporterBase, PartStaffExporterMixin):
         '''
         s = self.stream
         pp = PartExporter(s, parent=self)
-        pp.parse()
+        pp.parse(makeNotation=makeNotation)
         self.partExporterList.append(pp)
 
     def postPartProcess(self):
@@ -2344,10 +2358,11 @@ class PartExporter(XMLExporterBase):
 
         self.spannerBundle = partObj.spannerBundle
 
-    def parse(self):
+    def parse(self, makeNotation: bool = True):
         '''
         Set up instruments, create a partId (if no good one exists) and sets it on
         <part>, fixes up the notation (`fixupNotationFlat()` or `fixupNotationMeasured()`)
+        if `makeNotation` is True,
         setsIdLocals on spanner bundle. runs parse() on each measure's MeasureExporter and
         appends the output to the <part> object.
 
@@ -2358,12 +2373,15 @@ class PartExporter(XMLExporterBase):
         self.xmlRoot.set('id', str(self.firstInstrumentObject.partId))
         # Suppose that everything below this is a measure
         measureStream = self.stream.getElementsByClass('Stream').stream()
-        if not measureStream:
+        if makeNotation and not measureStream:
             self.fixupNotationFlat()
             # Now we have measures
             measureStream = self.stream.getElementsByClass('Stream').stream()
-        else:
+        elif makeNotation:
             self.fixupNotationMeasured(measureStream)
+        elif not measureStream:
+            raise MusicXMLExportException(
+                'Cannot export with makeNotation=False if there are no measures')
         # make sure that all instances of the same class have unique ids
         self.spannerBundle.setIdLocals()
         for m in measureStream:
@@ -6391,7 +6409,10 @@ class Test(unittest.TestCase):
         s.append(note.Note())
         s.append(note.Note())
         gex = GeneralObjectExporter(s)
-        tree = ET.fromstring(gex.parse().decode('utf-8'))
+
+        warn_msg = f'{s} is not well-formed; see isWellFormedNotation()'
+        with self.assertWarns(MusicXMLWarning, msg=warn_msg):
+            tree = ET.fromstring(gex.parse().decode('utf-8'))
         # Assert no gaps in stream
         self.assertSequenceEqual(tree.findall('.//forward'), [])
 

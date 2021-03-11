@@ -960,10 +960,19 @@ class ConverterMusicXML(SubConverter):
 
         return fp
 
-    def write(self, obj, fmt, fp=None, subformats=None,
-              compress=False, **keywords):  # pragma: no cover
+    def write(self,
+              obj,
+              fmt,
+              *,
+              fp=None,
+              subformats=None,
+              makeNotation=True,
+              compress=False,
+              **keywords):  # pragma: no cover
         '''
         Write to a .xml file.
+        Set `makeNotation=False` to prevent making a deepcopy and fixing up the notation,
+        so long as `obj` is a :class:`~music21.stream.Score`.
         Set `compress=True` to immediately compress the output to a .mxl file.
         '''
         from music21.musicxml import archiveTools, m21ToXml
@@ -977,8 +986,12 @@ class ConverterMusicXML(SubConverter):
             defaults.title = ''
             defaults.author = ''
 
+        dataBytes: bytes = b''
         generalExporter = m21ToXml.GeneralObjectExporter(obj)
-        dataBytes: bytes = generalExporter.parse()
+        if makeNotation is False and 'Score' in obj.classes:
+            dataBytes = generalExporter.parseWellFormedObject(makeNotation=False)
+        else:
+            dataBytes = generalExporter.parse()
 
         writeDataStreamFp = fp
         if fp is not None and subformats is not None:
