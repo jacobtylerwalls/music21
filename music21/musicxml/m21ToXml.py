@@ -2683,7 +2683,7 @@ class MeasureExporter(XMLExporterBase):
         self.measureOffsetStart = 0.0
         self.offsetInMeasure = 0.0
         self.currentVoiceId: Optional[int] = None
-        self.nextFreeVoiceNumber = 1
+        # self.nextFreeVoiceNumber = 1
 
         self.rbSpanners = []  # repeatBracket spanners
 
@@ -2758,16 +2758,11 @@ class MeasureExporter(XMLExporterBase):
         self.offsetInMeasure = 0.0
         if 'Voice' in m.classes:
             m: stream.Voice
-            if isinstance(m.id, int) and m.id < defaults.minIdNumberToConsiderMemoryLocation:
-                voiceId = m.id
-            elif isinstance(m.id, int):
-                voiceId = self.nextFreeVoiceNumber
-                self.nextFreeVoiceNumber += 1
-            else:
-                voiceId = m.id
+            voiceId = m.number
         else:
             voiceId = None
 
+        # TODO: rename, since this now reads from .number
         self.currentVoiceId = voiceId
 
         # group all objects by offsets and then do a different order than normal sort.

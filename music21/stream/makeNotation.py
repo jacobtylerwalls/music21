@@ -537,9 +537,9 @@ def makeMeasures(
             #    ['assigned clef to measure', measureCount, m.clef])
 
         # add voices if necessary (voiceCount > 0)
-        for voiceIndex in range(voiceCount):
+        for voiceIndex in range(1, voiceCount + 1):
             v = stream.Voice()
-            v.id = voiceIndex  # id is voice index, starting at 0
+            v.number = voiceIndex  # number is voice index, starting at 1
             m.coreInsert(0, v)
         if voiceCount:
             m.coreElementsChanged()
@@ -1019,12 +1019,12 @@ def makeTies(
     >>> p2.show('text')
     {0.0} <music21.stream.Measure 1 offset=0.0>
         {0.0} <music21.meter.TimeSignature 1/4>
-        {0.0} <music21.stream.Voice v1>
+        {0.0} <music21.stream.Voice 1 (v1)>
             {0.0} <music21.note.Note C>
-        {0.0} <music21.stream.Voice 2>
+        {0.0} <music21.stream.Voice 2 (2)>
             {0.0} <music21.note.Note B>
     {1.0} <music21.stream.Measure 2 offset=1.0>
-        {0.0} <music21.stream.Voice 0x105332ac8>
+        {0.0} <music21.stream.Voice 1>
             {0.0} <music21.note.Note C>
 
     >>> for n in p2.recurse().notes:

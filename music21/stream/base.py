@@ -2744,7 +2744,7 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
         `recurse=True` should not be necessary to find elements in streams
         without substreams, such as a loose Voice:
 
-        >>> v = stream.Voice([note.Note(quarterLength=5.5)], id=1)
+        >>> v = stream.Voice([note.Note(quarterLength=5.5)], number=1)
         >>> v.splitAtDurations()
         (<music21.stream.Voice 1>,)
         >>> [n.duration for n in v.notes]
@@ -10450,8 +10450,11 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
             # remove from source
             returnObj.remove(e)
         # remove any unused voices (possible if overlap group has sus)
+        voiceNumber: int = 0
         for v in voices:
             if v:  # skip empty voices
+                voiceNumber += 1  # 1-indexed
+                v.number = voiceNumber
                 if fillGaps:
                     returnObj.makeRests(fillGaps=True, inPlace=True)
                 returnObj.insert(0, v)
@@ -10541,7 +10544,7 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
             if not countById:
                 voiceCount = len(voices)
             else:
-                voiceIds = [v.id for v in voices]
+                voiceIds = [str(v.id) for v in voices]
         else:  # if no measure or voices, get one part
             voiceCount = 1
 
@@ -10574,20 +10577,20 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
                 {0.0} <music21.clef.BassClef>
                 {0.0} <music21.key.Key of D major>
                 {0.0} <music21.meter.TimeSignature 4/4>
-                {0.0} <music21.stream.Voice 3>
+                {0.0} <music21.stream.Voice 1 (3)>
                     {0.0} <music21.note.Note E>
                     ...
                     {3.0} <music21.note.Rest rest>
-                {0.0} <music21.stream.Voice 4>
+                {0.0} <music21.stream.Voice 2 (4)>
                     {0.0} <music21.note.Note F#>
                     ...
                     {3.5} <music21.note.Note B>
             {4.0} <music21.stream.Measure 2 offset=4.0>
-                {0.0} <music21.stream.Voice 3>
+                {0.0} <music21.stream.Voice 1 (3)>
                     {0.0} <music21.note.Note E>
                     ...
                     {3.0} <music21.note.Rest rest>
-                {0.0} <music21.stream.Voice 4>
+                {0.0} <music21.stream.Voice 2 (4)>
                     {0.0} <music21.note.Note E>
                     ...
                     {3.5} <music21.note.Note A>
@@ -10696,7 +10699,7 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
                 partDict[i] = p
             else:
                 voiceId = voiceIds[i]
-                p.id = str(self.id) + '-' + voiceId
+                p.id = str(self.id) + '-' + str(voiceId)
                 partDict[voiceId] = p
 
         def doOneMeasureWithVoices(mInner):
@@ -10807,8 +10810,10 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
           elements in the parent Stream.
         * If `force` is True, even if there is more than one Voice left,
           all voices will be flattened.
+        * Renumber the voices beginning at 1.
 
         Changed in v. 5 -- inPlace is default False and a keyword only arg.
+        Changed in v. 7 -- now renumbers voices.
 
         >>> s = stream.Stream([note.Note(), note.Note(), note.Note()])  # simultaneous
         >>> s.makeVoices(inPlace=True)
@@ -10842,7 +10847,8 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
             returnObj.remove(v)
 
         if len(flatten) == 1 or force:  # always flatten 1
-            for v in flatten:  # usually one unless force
+            for i, v in enumerate(flatten):  # usually one unless force
+                v.number = i + 1  # 1-indexed
                 # get offset of voice in returnObj
                 shiftOffset = v.getOffsetBySite(returnObj)
                 for e in v.elements:
@@ -12189,13 +12195,55 @@ class Voice(Stream):
     stream belongs to a certain "voice" for analysis or display
     purposes.
 
+    The `.id` attribute should be used to track analytical voices,
+    whereas the `.number` attribute is a 1-indexed sequence that
+    will increment when voices are created by notation routines and
+    will be renumbered after transformations by :meth:`flattenUnnecessaryVoices`,
+    a helper method run by most :meth:`makeNotation` operations, including
+    during musicxml export.
+
+    MusicXML allows any string for the `<voice>` tag, but in practice, MusicXML
+    producers begin at '1' and (should, but not always) continue the numbering
+    on the subsequent staff of a multi-staff part. Since music21 automatically
+    separates multi-staff parts on import, the `.number` will reset to reflect
+    the actual count on each :class:`PartStaff` object. The original MusicXML
+    `<voice>` content can be found on `.id`.
+
+    (Should be true in v.7 soon:)
+    If default voice numbering produces unsatisfactory musicXML output,
+    numbering can be overridden by manipulating `.number` on the Voice objects
+    and then passing `makeNotation=False` to :meth:`show` or :meth:`write` so as to
+    avoid renumbering.
+
+    See :meth:`voicesToParts`, especially the keyword `separateById` for examples
+    of how to extract and associate voices together using `.id`.
+
     Note that both Finale's Layers and Voices as concepts are
     considered Voices here.
 
-    Voices have a sort order of 1 greater than time signatures
+    Voices have a sort order of 1 greater than time signatures.
+
+    Changed in v.7 -- added attribute `.number`
     '''
     recursionType = 'elementsFirst'
     classSortOrder = 5
+    _DOC_ORDER = ['']
+    _DOC_ATTR = {
+        'number': '''
+            int describing the 1-indexed sequence of this voice in its container
+            (most likely Measure). Renumbering performed by
+            :meth:`flattenUnnecessaryVoices`.''',
+    }
+
+    def __init__(self, *args, **keywords):
+        super().__init__(*args, **keywords)
+        self.number: int = int(keywords['number']) if 'number' in keywords else -1
+
+    def _reprInternal(self):
+        if isinstance(self.id, int) and self.id > defaults.minIdNumberToConsiderMemoryLocation:
+            return str(self.number)
+        else:
+            return f'{self.number} ({self.id})'
 
 
 # -----------------------------------------------------------------------------
