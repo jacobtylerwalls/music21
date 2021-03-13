@@ -1716,6 +1716,7 @@ class PartParser(XMLParserBase):
             ):
                 copy_into_partStaff(sourceMeasure, copyMeasure, elementsIdsNotToGoInThisStaff)
                 for sourceVoice, copyVoice in zip(sourceMeasure.voices, copyMeasure.voices):
+                    copyVoice.number = sourceVoice.number
                     copy_into_partStaff(sourceVoice, copyVoice, elementsIdsNotToGoInThisStaff)
                 copyMeasure.flattenUnnecessaryVoices(force=False, inPlace=True)
 
