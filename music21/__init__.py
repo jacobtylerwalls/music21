@@ -15,7 +15,7 @@ obligations in using, modifying, or distributing music21.
 Roughly speaking, this means that anyone can use this software for
 free, they can distribute it to anyone, so long as this acknowledgment
 of copyright and ownership remain publicly accessible.  You may also
-modify this software or use it in your own programs so long as you do
+modify this software or use it in your own programs
 so long as you make your product available
 under the same license.  You may also link to this code as a library
 from your sold, proprietary commercial product so long as this code
