@@ -1348,10 +1348,10 @@ class MetadataBundle(prebase.ProtoM21Object):
 
         >>> import os
         >>> import tempfile
-        >>> tempFilePath = tempfile.mkstemp()[1]
-        >>> bachBundle.write(filePath=tempFilePath)
+        >>> with tempfile.NamedTemporaryFile(delete=False) as tmp:
+        ...    bachBundle.write(filePath=tmp.name)
         <music21.metadata.bundles.MetadataBundle {363 entries}>
-        >>> os.remove(tempFilePath)
+        >>> os.remove(tmp.name)
         '''
         filePath = filePath or self.filePath
         if self.filePath is not None:
