@@ -1512,7 +1512,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         b.run()
 
     def testScatterPitchSpaceDynamicSymbol(self):
-        a = corpus.parse('schumann/opus41no1', 2)
+        a = corpus.parse('schumann_robert/opus41no1', 2)
         b = ScatterPitchSpaceDynamicSymbol(a.parts[0].flat, title='Schumann (soprano voice)')
         b.run()
 
@@ -1543,7 +1543,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
             (ScatterPitchClassQuarterLength, None, None),
             (ScatterPitchClassOffset, None, None),
             (ScatterPitchSpaceDynamicSymbol,
-             corpus.getWork('schumann/opus41no1', 2),
+             corpus.getWork('schumann_robert/opus41no1', 2),
              'Schumann Opus 41 No 1'),
 
             # offset based horizontal
@@ -1553,7 +1553,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
             (ScatterWeightedPitchSpaceQuarterLength, None, None),
             (ScatterWeightedPitchClassQuarterLength, None, None),
             (ScatterWeightedPitchSpaceDynamicSymbol,
-             corpus.getWork('schumann/opus41no1', 2),
+             corpus.getWork('schumann_robert/opus41no1', 2),
              'Schumann Opus 41 No 1'),
 
 

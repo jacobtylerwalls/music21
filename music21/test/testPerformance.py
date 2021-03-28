@@ -129,9 +129,9 @@ class Test(unittest.TestCase):
         junk = corpus.parse('haydn/opus74no1/movement3', forceSource=True)
 
     def runParseSchumann(self):
-        '''Loading file: schumann/opus41no1/movement2
+        '''Loading file: schumann_robert/opus41no1/movement2
         '''
-        junk = corpus.parse('schumann/opus41no1/movement2', forceSource=True)
+        junk = corpus.parse('schumann_robert/opus41no1/movement2', forceSource=True)
 
     def runParseLuca(self):
         '''
