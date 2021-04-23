@@ -510,6 +510,6 @@ binary_dots = {_B[0]: ('00', '00', '00'),
 brailleDotDict = _B
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest()
+    from music21.test.testRunner import mainTest
+    mainTest()
 

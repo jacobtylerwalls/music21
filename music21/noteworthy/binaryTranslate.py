@@ -1008,8 +1008,8 @@ class NWCObject:
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest()
+    from music21.test.testRunner import mainTest
+    mainTest()
     # fp = '/Users/cuthbert/Desktop/395.nwc'
     # fp = 'http://www.cpdl.org/brianrussell/358.nwc'
     # from music21 import converter

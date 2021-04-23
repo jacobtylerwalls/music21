@@ -2645,5 +2645,5 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , TestExternal)
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , TestExternal)

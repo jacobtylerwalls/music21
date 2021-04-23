@@ -423,4 +423,5 @@ class ModuleGather:
 
 
 if __name__ == '__main__':
-    music21.mainTest()
+    from music21.test.testRunner import mainTest
+    mainTest()

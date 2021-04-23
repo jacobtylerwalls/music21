@@ -736,5 +736,5 @@ _DOC_ORDER = []
 
 if __name__ == '__main__':
     # TestExternal().testTrecentoMadrigal()
-    import music21
-    music21.mainTest(TestExternal)
+    from music21.test.testRunner import mainTest
+    mainTest(TestExternal)

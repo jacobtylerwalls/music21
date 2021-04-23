@@ -389,6 +389,6 @@ if __name__ == '__main__':
 
     if len(sys.argv) == 1:  # normal conditions
         # sys.arg test options will be used in mainTest()
-        music21.mainTest(Test)
+        mainTest(Test)
 
 

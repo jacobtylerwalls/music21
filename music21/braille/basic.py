@@ -1676,6 +1676,6 @@ class Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , verbose=True)
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , verbose=True)
 

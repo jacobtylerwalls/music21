@@ -3886,6 +3886,6 @@ class Test(unittest.TestCase):
 _DOC_ORDER = [streamToMidiFile, midiFileToStream]
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testConductorStream')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testConductorStream')
 

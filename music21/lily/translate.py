@@ -2653,7 +2653,7 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
     # pylint: disable=ungrouped-imports
-    import music21
-    music21.mainTest(Test)  # , TestExternal)
-    # music21.mainTest(TestExternal, 'noDocTest')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , TestExternal)
+    # mainTest(TestExternal, 'noDocTest')
 

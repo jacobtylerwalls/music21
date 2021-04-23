@@ -3673,6 +3673,6 @@ _DOC_ORDER = [Duration, Tuplet, convertQuarterLengthToType, TupletFixer]
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testAugmentOrDiminish')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testAugmentOrDiminish')
 

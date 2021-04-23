@@ -221,6 +221,6 @@ _DOC_ORDER = [plotStream]
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testPlot3DPitchSpaceQuarterLengthCount')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testPlot3DPitchSpaceQuarterLengthCount')
 

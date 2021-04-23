@@ -463,6 +463,6 @@ if __name__ == '__main__':
     i = IPythonNotebookReSTWriter()
     p5 = i.ipythonNotebookFilePaths[5]
     i.convertOneNotebook(p5)
-    import music21
-    music21.mainTest('moduleRelative')
+    from music21.test.testRunner import mainTest
+    mainTest('moduleRelative')
 

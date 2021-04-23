@@ -1537,9 +1537,9 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
 
 if __name__ == '__main__':
-    import music21
+    from music21.test.testRunner import mainTest
     # import sys
     # sys.argv.append('SimpleTextShow')
-    music21.mainTest(Test)
+    mainTest(Test)
     # run command below to test commands that open musescore, etc.
-    # music21.mainTest(TestExternal)
+    # mainTest(TestExternal)

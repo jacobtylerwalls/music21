@@ -3172,6 +3172,6 @@ _DOC_ORDER = [Harmony, chordSymbolFigureFromChord, ChordSymbol, ChordStepModific
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testChordStepBass')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testChordStepBass')
 

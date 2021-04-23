@@ -272,5 +272,5 @@ ZeroSortTupleHigh = SortTuple(atEnd=0, offset=0.0, priority=INFINITY, classSortO
 
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-    import music21
-    music21.mainTest()
+    from music21.test.testRunner import mainTest
+    mainTest()

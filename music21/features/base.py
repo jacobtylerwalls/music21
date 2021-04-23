@@ -1860,6 +1860,6 @@ _DOC_ORDER = [DataSet, Feature, FeatureExtractor]
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testStreamFormsA')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testStreamFormsA')
 

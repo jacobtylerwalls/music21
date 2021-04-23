@@ -1765,8 +1765,8 @@ if __name__ == '__main__':
         te = TestExternal()
 
         if len(sys.argv) < 2 or sys.argv[1] in ['all', 'test']:
-            import music21
-            music21.mainTest(Test)
+            from music21.test.testRunner import mainTest
+            mainTest(Test)
 
         # arg[1] is test to launch
         elif sys.argv[1] == 'te':

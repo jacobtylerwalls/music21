@@ -1977,7 +1977,7 @@ _DOC_ORDER = [parse, parseFile, parseData, parseURL, freeze, thaw, freezeStr, th
 
 if __name__ == '__main__':
     # sys.arg test options will be used in mainTest()
-    import music21
-    music21.mainTest(Test)  # , runTest='testConverterFromPath')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testConverterFromPath')
 
 

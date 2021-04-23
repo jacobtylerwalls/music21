@@ -1258,6 +1258,6 @@ class Test(unittest.TestCase):
 # ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    import music21
+    from music21.test.testRunner import mainTest
 
-    music21.mainTest(Test)
+    mainTest(Test)

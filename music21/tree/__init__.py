@@ -113,5 +113,5 @@ def makeExampleScore():
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest()
+    from music21.test.testRunner import mainTest
+    mainTest()

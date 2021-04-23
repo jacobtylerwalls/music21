@@ -151,8 +151,8 @@ def mainTest(*testClasses, **kwargs):
                 hello = 'Hello'
                 self.assertEqual('Hello', hello)
 
-        from music21.test.testRunner import mainTest
         if __name__ == '__main__':
+            from music21.test.testRunner import mainTest
             mainTest(Test)
 
 

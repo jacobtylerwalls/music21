@@ -8276,5 +8276,6 @@ class Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    music21.mainTest(Test, 'verbose')  # , runTest='test_makeBeams__paddingLeft_2_2')
+    from music21.test.testRunner import mainTest
+    mainTest(Test, 'verbose')  # , runTest='test_makeBeams__paddingLeft_2_2')
 

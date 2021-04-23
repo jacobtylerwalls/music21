@@ -1614,5 +1614,5 @@ _DOC_ORDER = (
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testElementsStoppingAt')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testElementsStoppingAt')

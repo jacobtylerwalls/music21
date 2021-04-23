@@ -4051,8 +4051,8 @@ _DOC_ORDER = [ConcreteScale, AbstractScale]
 
 if __name__ == '__main__':
     # sys.arg test options will be used in mainTest()
-    import music21
-    music21.mainTest(Test)  # , runTest='testDeriveByDegreeBiDirectional')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testDeriveByDegreeBiDirectional')
 
 # store implicit tonic or Not
 # if not set, then comparisons fall to abstract

@@ -1619,5 +1619,5 @@ class CorpusDocumenter(Documenter):
 
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest('moduleRelative')
+    from music21.test.testRunner import mainTest
+    mainTest('moduleRelative')

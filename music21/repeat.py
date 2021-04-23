@@ -4303,6 +4303,6 @@ _DOC_ORDER = [RepeatExpression, RepeatExpressionMarker, Coda, Segno, Fine,
               DaCapoAlCoda, AlSegno, DalSegno, DalSegnoAlFine, DalSegnoAlCoda, RepeatFinder]
 
 if __name__ == '__main__':
-    import music21
-    music21.mainTest(Test)  # , runTest='testExpandSimplestPart')
+    from music21.test.testRunner import mainTest
+    mainTest(Test)  # , runTest='testExpandSimplestPart')
 

@@ -27,7 +27,7 @@ omit_modules = [
 # THESE ARE NOT RELEVANT FOR coveralls.io -- edit .coveragerc to change that
 exclude_lines = [
     r'\s*import music21\s*',
-    r'\s*music21.mainTest\(\)\s*',
+    r'\s*mainTest\(\)\s*',
     r'.*#\s*pragma:\s*no cover.*',
     r'class TestExternal.*',
 ]

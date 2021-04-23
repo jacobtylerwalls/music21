@@ -504,6 +504,6 @@ _DOC_ORDER = [base40ActualInterval]
 if __name__ == '__main__':
     #     bn = BaseN(3)
     #     print(bn.generateLetters())
-    import music21
-    music21.mainTest(Test)
+    from music21.test.testRunner import mainTest
+    mainTest(Test)
 
