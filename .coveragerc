@@ -12,4 +12,5 @@ exclude_lines =
     if self.debug:
     class TestExternal(unittest.TestCase):
     def x_test
+    def xtest
     pragma: no cover

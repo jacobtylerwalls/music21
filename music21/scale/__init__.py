@@ -591,7 +591,8 @@ class AbstractScale(Scale):
         ss.description = repr(self)
         return ss
 
-    def write(self, fmt=None, fp=None, direction=DIRECTION_ASCENDING, **keywords):
+    def write(self, fmt=None, fp=None, direction=DIRECTION_ASCENDING,
+              **keywords):  # pragma: no cover
         '''
         Write the scale in a format. Here, prepare scala format if requested.
         '''
@@ -611,7 +612,8 @@ class AbstractScale(Scale):
                 return fpLocal
         return Scale.write(self, fmt=fmt, fp=fp, **keywords)
 
-    def show(self, fmt=None, app=None, direction=DIRECTION_ASCENDING, **keywords):
+    def show(self, fmt=None, app=None, direction=DIRECTION_ASCENDING,
+             **keywords):  # pragma: no cover
         '''
         Show the scale in a format. Here, prepare scala format if requested.
         '''
