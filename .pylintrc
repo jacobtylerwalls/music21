@@ -93,7 +93,6 @@ disable=
     keyword-arg-before-vararg,
     consider-using-get,
     chained-comparison,
-    import-outside-toplevel,
     trailing-newlines,  # is this really the worst thing in the world?
     no-else-continue,  # not so bad...
     no-else-break,  # same...
@@ -104,6 +103,7 @@ disable=
     import-outside-toplevel,  # allow for import music21, etc.
     not-callable,  # false positives, for instance on x.next()
     raise-missing-from,  # want to do this eventually, but adding 1000 msgs not helpful
+    undefined-all-variable,  # from music21 import *
 
 #       'protected-access', # this is an important one, but for now we do a lot of
 #                           # x = copy.deepcopy(self); x._volume = ... which is not a problem...

@@ -12,7 +12,7 @@
 
 
 import unittest
-import music21  # needed to do fully-qualified isinstance name checking
+# import music21  # needed to do fully-qualified isinstance name checking
 
 from music21 import freezeThaw
 

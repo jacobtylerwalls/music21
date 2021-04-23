@@ -74,7 +74,6 @@ from music21 import common
 from music21 import prebase
 from music21 import exceptions21
 from music21._version import __version__, __version_info__
-from music21.test.testRunner import mainTest
 
 # This should actually be bound to Music21Object, but cannot import here.
 _M21T = TypeVar('_M21T', bound=prebase.ProtoM21Object)
@@ -99,7 +98,6 @@ __all__ = [
 
     'VERSION',
     'VERSION_STR',
-    'mainTest',
 ]
 
 # N.B. for PyDev "all" import working, we need to list this

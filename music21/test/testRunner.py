@@ -143,9 +143,7 @@ def mainTest(*testClasses, **kwargs):
     If 'moduleRelative' (a string) is passed as a module, then
     global variables are preserved.
 
-    Run example (put at end of your modules):
-
-    ::
+    Run example (put at end of your modules)::
 
         import unittest
         class Test(unittest.TestCase):
@@ -153,9 +151,9 @@ def mainTest(*testClasses, **kwargs):
                 hello = 'Hello'
                 self.assertEqual('Hello', hello)
 
-        import music21
+        from music21.test.testRunner import mainTest
         if __name__ == '__main__':
-            music21.mainTest(Test)
+            mainTest(Test)
 
 
     This module tries to fix up some differences between python2 and python3 so

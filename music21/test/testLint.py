@@ -143,6 +143,7 @@ def main(fnAccept=None, strict=False):
         'not-callable',  # false positives, for instance on x.next()
 
         'raise-missing-from',  # later.
+        'undefined-all-variable',  # from music21 import *
 
     ]
     if not strict:

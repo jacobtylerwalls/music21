@@ -1311,13 +1311,14 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 
     def testMusicXMLConversion(self):
         from music21.musicxml import testFiles
+        from music21.converter import subConverters
         for mxString in testFiles.ALL:
             a = subConverters.ConverterMusicXML()
             a.parseData(mxString)
 
     def testMusicXMLTabConversion(self):
         from music21.musicxml import testFiles
-
+        from music21.converter import subConverters
         mxString = testFiles.ALL[5]
         a = subConverters.ConverterMusicXML()
         a.parseData(mxString)

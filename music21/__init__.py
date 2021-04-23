@@ -185,12 +185,3 @@ from music21.base import VERSION  # noqa: E402
 from music21.base import VERSION_STR  # noqa: E402
 
 __version__ = VERSION_STR
-
-# legacy reason why it's here...
-from music21.test.testRunner import mainTest  # noqa: E402
-
-# -----------------------------------------------------------------------------
-# this brings all of our own __all__ names into the music21 package namespace
-# pylint: disable=wildcard-import
-from music21 import *  # @UnresolvedImport  # noqa: E402,F403
-

@@ -216,8 +216,8 @@ class Test(unittest.TestCase):
 
     def xtest009(self):
         '''Are lower pitches likely to be shorter and higher pitches likely to be longer?'''
-
-        partStream = music21.converter.parse('dichterliebe1.xml')
+        from music21 import converter
+        partStream = converter.parse('dichterliebe1.xml')
         unused_noteStream = partStream['notes']
         # unused_table = analysis.correlate(noteStream, 'pitchSpace', 'duration')
 
@@ -260,7 +260,8 @@ class Test(unittest.TestCase):
     def xtest015(self):
         '''Calculate harmonic intervals ignoring unisons.'''
         from collections import defaultdict
-        score1 = music21.converter.parse('dichterliebe1.xml')
+        from music21 import converter
+        score1 = converter.parse('dichterliebe1.xml')
         monoScore = score1.chordsToNotes()    # returns a new Stream
         unused_notePairs = monoScore.getAllSimultaneousNotes()
         # returns a list of Tuples intervals = interval.generateFromNotePairs(notePairs)
