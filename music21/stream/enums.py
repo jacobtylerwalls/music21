@@ -40,5 +40,5 @@ class StaffType(enum.Enum):
 
 
 if __name__ == '__main__':
-    from music21 import mainTest
+    from music21.test.testRunner import mainTest
     mainTest()
