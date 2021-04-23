@@ -244,6 +244,11 @@ from music21 import meter
 from music21 import pitch
 
 from music21 import environment
+
+# for doctests
+from music21 import harmony  # pylint: disable=unused-import
+from music21 import tinyNotation  # pylint: disable=unused-import
+
 _MOD = 'tinyNotation'
 environLocal = environment.Environment(_MOD)
 

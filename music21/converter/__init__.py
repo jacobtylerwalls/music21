@@ -68,6 +68,9 @@ from music21.metadata import bundles
 from music21 import _version
 from music21 import environment
 
+from music21 import corpus  # for doctest
+from music21 import humdrum  # for doctest
+
 _MOD = 'converter'
 environLocal = environment.Environment(_MOD)
 
@@ -1364,7 +1367,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         unused_post = parseURL(urlC)
 
     def testFreezer(self):
-        from music21 import corpus
         s = corpus.parse('bach/bwv66.6.xml')
         fp = freeze(s)
         s2 = thaw(fp)
@@ -1520,7 +1522,7 @@ class Test(unittest.TestCase):
 
     def testConversionMXClefTimeCorpus(self):
 
-        from music21 import corpus, clef, meter
+        from music21 import clef, meter
         a = corpus.parse('luca')
 
         # there should be only one clef in each part
@@ -1632,7 +1634,6 @@ class Test(unittest.TestCase):
         self.assertEqual(countStartTies, 40)
 
     def testConversionMXInstrument(self):
-        from music21 import corpus
         s = corpus.parse('schumann_clara/opus17', 3)
         # s.show()
         is1 = s.parts[0].flat.getElementsByClass('Instrument')
@@ -1759,7 +1760,6 @@ class Test(unittest.TestCase):
     def testConversionABCOpus(self):
 
         from music21.abcFormat import testFiles
-        from music21 import corpus
 
         s = parse(testFiles.theAleWifesDaughter)
         # get a Stream object, not an opus
@@ -1786,7 +1786,6 @@ class Test(unittest.TestCase):
 
     def testConversionABCWorkFromOpus(self):
         # test giving a work number at loading
-        from music21 import corpus
         s = corpus.parse('essenFolksong/han1', number=6)
         self.assertIsInstance(s, stream.Score)
         # noinspection SpellCheckingInspection

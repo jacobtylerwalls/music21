@@ -31,6 +31,9 @@ from music21 import pitch
 from music21 import spanner
 from music21 import stream
 
+# for doctests
+from music21 import volpiano  # pylint: disable=unused-import
+
 environLocal = environment.Environment('volpiano.py')
 
 

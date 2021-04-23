@@ -29,6 +29,8 @@ from music21 import common
 from music21 import environment
 from music21 import exceptions21
 
+from music21 import configure  # for doctests
+
 _MOD = 'configure'
 environLocal = environment.Environment(_MOD)
 
@@ -1668,7 +1670,6 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
 class Test(unittest.TestCase):
 
     def testYesOrNo(self):
-        from music21 import configure
         d = configure.YesOrNo(default=True, tryAgain=False,
                               promptHeader='Are you ready to continue?')
         d.askUser('n')
@@ -1692,12 +1693,10 @@ class Test(unittest.TestCase):
         self.assertEqual(str(d.getResult()), '<music21.configure.IncompleteInput: blah>')
 
     def testSelectFromList(self):
-        from music21 import configure
         d = configure.SelectFromList(default=1)
         self.assertEqual(d._default, 1)
 
     def testSelectMusicXMLReaders(self):
-        from music21 import configure
         d = configure.SelectMusicXMLReader()
         # force request to user by returning no valid results
 
