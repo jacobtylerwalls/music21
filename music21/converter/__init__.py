@@ -60,8 +60,6 @@ __all__ = [
 
 ]
 
-from music21.converter import subConverters
-
 from music21 import exceptions21
 from music21 import common
 from music21 import stream
@@ -819,6 +817,7 @@ class Converter:
         <class 'music21.converter.subConverters.SubConverter'>
         '''
         defaultSubconverters = []
+        from music21.converter import subConverters
         for i in sorted(subConverters.__dict__):
             name = getattr(subConverters, i)
             # noinspection PyTypeChecker
@@ -1655,6 +1654,7 @@ class Test(unittest.TestCase):
         unused_s = parseFile(fp)
         unused_s = parse(fp)
 
+        from music21.converter import subConverters
         c = subConverters.ConverterMidi()
         c.parseFile(fp)
 
@@ -1844,6 +1844,7 @@ class Test(unittest.TestCase):
 
         # test loading a directory
         fp = common.getSourceFilePath() / 'musedata' / 'testPrimitive' / 'test01'
+        from music21.converter import subConverters
         cmd = subConverters.ConverterMuseData()
         cmd.parseFile(fp)
 
