@@ -37,11 +37,12 @@ class Corpus(prebase.ProtoM21Object):
     __metaclass__ = abc.ABCMeta
 
     # TODO: this is volatile -- should be elsewhere...
-    _acceptableExtensions = ['abc', 'capella', 'midi', 'musicxml', 'musedata',
-                             'humdrum', 'romantext', 'noteworthytext', 'noteworthy']
+    _acceptableExtensions = ['.abc', '.capx', '.mid', '.midi', '.xml', '.mxl', '.mx',
+                             '.musicxml', '.md', '.musedata', '.zip', '.krn', '.rntxt',
+                             '.rntext', '.romantext', '.rtxt', '.nwctxt', '.nwc']
 
-    _allExtensions = tuple(common.flattenList([common.findInputExtension(x)
-                                               for x in _acceptableExtensions]))
+    # Functionality removed during import refactor in v7
+    _allExtensions = _acceptableExtensions
 
     _pathsCache = {}
 
