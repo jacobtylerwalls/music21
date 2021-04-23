@@ -19,7 +19,7 @@ This file is not run with the standard test battery presently.
 
 import unittest
 
-import music21
+# import music21
 from music21 import common, corpus
 from music21.musicxml.m21ToXml import GeneralObjectExporter as GEX
 
@@ -389,6 +389,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) == 1:  # normal conditions
         # sys.arg test options will be used in mainTest()
+        from music21.test.testRunner import mainTest
         mainTest(Test)
 
 
