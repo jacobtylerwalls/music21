@@ -1178,6 +1178,10 @@ class Tuplet(prebase.ProtoM21Object):
         Fraction(1, 3)
 
         Raises ValueError if `amountToScale` is negative.
+
+        >>> a.augmentOrDiminish(-1)
+        Traceback (most recent call last):
+        ValueError: amountToScale must be greater than zero
         '''
         if not amountToScale > 0:
             raise ValueError('amountToScale must be greater than zero')
@@ -1914,6 +1918,12 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
         >>> gRetain.components
         (DurationTuple(type='eighth', dots=0, quarterLength=0.5),
          DurationTuple(type='eighth', dots=0, quarterLength=0.5))
+
+        Negative values raise ValueError:
+
+        >>> fDur.augmentOrDiminish(-1)
+        Traceback (most recent call last):
+        ValueError: amountToScale must be greater than zero
         '''
         if not amountToScale > 0:
             raise ValueError('amountToScale must be greater than zero')
@@ -3667,6 +3677,30 @@ class Test(unittest.TestCase):
         # this failure happens earlier in quarterConversion()
         d = Duration(1 / 2049)
         self.assertEqual(d.type, 'inexpressible')
+
+    def testExceptions(self):
+        with self.assertRaises(TypeError):
+            unused = Duration('redundant type', type='eighth')
+
+        d = Duration(1 / 3)
+        with self.assertRaises(TypeError):
+            d.linked = 'do not link'
+        with self.assertRaises(ValueError):
+            d.componentIndexAtQtrPosition(400)
+        with self.assertRaises(ValueError):
+            d.componentIndexAtQtrPosition(-0.001)
+        with self.assertRaises(TypeError):
+            d.dotGroups = None
+        with self.assertRaises(TypeError):
+            d.dots = None
+        with self.assertRaises(ValueError):
+            d.type = 'custom'
+
+        gd = GraceDuration()
+        with self.assertRaises(ValueError):
+            gd.makeTime = 'True'
+        with self.assertRaises(ValueError):
+            gd.slash = 'none'
 
 
 # -------------------------------------------------------------------------------
