@@ -1176,9 +1176,11 @@ class Tuplet(prebase.ProtoM21Object):
 
         >>> c.tupletMultiplier()
         Fraction(1, 3)
+
+        Raises ValueError if `amountToScale` is negative.
         '''
         if not amountToScale > 0:
-            raise DurationException('amountToScale must be greater than zero')
+            raise ValueError('amountToScale must be greater than zero')
         # TODO: scale the triplet in the same manner as Durations
 
         post = copy.deepcopy(self)
@@ -1588,7 +1590,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
             elif isinstance(a, DurationTuple):
                 self.addDurationTuple(a)
             else:
-                raise DurationException(f'Cannot parse argument {a}')
+                raise TypeError(f'Cannot parse argument {a}')
 
         if 'durationTuple' in keywords:
             self.addDurationTuple(keywords['durationTuple'])
@@ -1768,7 +1770,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
 
     def _setLinked(self, value: bool):
         if value not in (True, False):
-            raise DurationException(f'Linked can only be True or False, not {value}')
+            raise TypeError(f'Linked can only be True or False, not {value}')
         if self._quarterLengthNeedsUpdating:
             self._updateQuarterLength()
         if value is False:
@@ -1914,7 +1916,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
          DurationTuple(type='eighth', dots=0, quarterLength=0.5))
         '''
         if not amountToScale > 0:
-            raise DurationException('amountToScale must be greater than zero')
+            raise ValueError('amountToScale must be greater than zero')
 
         post = copy.deepcopy(self)
 
@@ -2004,12 +2006,12 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
             raise DurationException(
                 'Need components to run getComponentIndexAtQtrPosition')
         if quarterPosition > self.quarterLength:
-            raise DurationException(
+            raise ValueError(
                 'position is after the end of the duration')
 
         if quarterPosition < 0:
             # values might wrap around from the other side
-            raise DurationException(
+            raise ValueError(
                 'position is before the start of the duration')
 
         # it seems very odd that these return objects
@@ -2054,11 +2056,11 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
         1.0
         >>> a.componentStartTime(3)
         Traceback (most recent call last):
-        music21.duration.DurationException: invalid component index value 3 submitted;
-                                            value must be an integer between 0 and 2
+        IndexError: invalid component index value 3 submitted;
+                    value must be an integer between 0 and 2
         '''
         if componentIndex not in range(len(self.components)):
-            raise DurationException(
+            raise IndexError(
                 f'invalid component index value {componentIndex} '
                 + f'submitted; value must be an integer between 0 and {len(self.components) - 1}')
 
@@ -2490,7 +2492,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
     @dotGroups.setter
     def dotGroups(self, value: Tuple[int, ...]):
         if not isinstance(value, tuple):
-            raise DurationException('only tuple dotGroups values can be used with this method.')
+            raise TypeError('only tuple dotGroups values can be used with this method.')
         # removes dots from all components...
         for i in range(len(self._components)):
             self._components[i] = durationTupleFromTypeDots(self._components[i].type, 0)
@@ -2582,7 +2584,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
         if self._componentsNeedUpdating:
             self._updateComponents()
         if not common.isNum(value):
-            raise DurationException('only numeric dot values can be used with this method.')
+            raise TypeError('only numeric dot values can be used with this method.')
 
         # easter egg...
         if value == inf:
@@ -2929,7 +2931,7 @@ class Duration(prebase.ProtoM21Object, SlottedObjectMixin):
     def type(self, value: str):
         # need to check that type is valid
         if value not in ordinalTypeFromNum and value not in ('inexpressible', 'complex'):
-            raise DurationException(f'no such type exists: {value}')
+            raise ValueError(f'no such type exists: {value}')
 
         if self.linked is True:
             nt = durationTupleFromTypeDots(value, self.dots)
@@ -3040,7 +3042,7 @@ class GraceDuration(Duration):
     @makeTime.setter
     def makeTime(self, expr):
         if expr not in (True, False, None):
-            raise DurationException('expr must be True, False, or None')
+            raise ValueError('expr must be True, False, or None')
         self._makeTime = bool(expr)
 
     @property
@@ -3054,7 +3056,7 @@ class GraceDuration(Duration):
     @slash.setter
     def slash(self, expr):
         if expr not in (True, False, None):
-            raise DurationException('expr must be True, False, or None')
+            raise ValueError('expr must be True, False, or None')
         self._slash = bool(expr)
 
 
