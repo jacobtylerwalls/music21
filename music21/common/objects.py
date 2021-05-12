@@ -158,7 +158,7 @@ class SlottedObjectMixin:
     Glissdata is probably not the best example:
 
     >>> import pickle
-    >>> class Glissdata(common.SlottedObjectMixin):
+    >>> class Glissdata(common.objects.SlottedObjectMixin):
     ...     __slots__ = ('time', 'frequency')
     >>> s = Glissdata()
     >>> s.time = 0.125

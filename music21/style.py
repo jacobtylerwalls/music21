@@ -17,6 +17,7 @@ from typing import Optional, Union
 import unittest
 
 from music21 import common
+from music21.common.objects import SlottedObjectMixin
 from music21 import exceptions21
 from music21.prebase import ProtoM21Object
 
@@ -460,7 +461,7 @@ class BeamStyle(Style):
         self.fan = None
 
 
-class StyleMixin(common.SlottedObjectMixin):
+class StyleMixin(SlottedObjectMixin):
     '''
     Mixin for any class that wants to support style and editorial, since several
     non-music21 objects, such as Lyrics and Accidentals will support Style.

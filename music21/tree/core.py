@@ -19,12 +19,12 @@ absolutely balanced by having O(log n) search times.
 from typing import Optional
 
 from music21.exceptions21 import TreeException
-from music21 import common
+from music21.common.objects import SlottedObjectMixin
 
 # -----------------------------------------------------------------------------
 
 
-class AVLNode(common.SlottedObjectMixin):
+class AVLNode(SlottedObjectMixin):
     r'''
     An AVL Tree Node, not specialized in any way, just contains positions.
 

@@ -37,6 +37,7 @@ from collections import OrderedDict
 from music21 import exceptions21
 from music21 import interval
 from music21 import common
+from music21.common.objects import SlottedObjectMixin
 from music21 import pitch
 from music21 import prebase
 
@@ -283,7 +284,7 @@ class Edge(prebase.ProtoM21Object):
     connections = property(getConnections)
 
 
-class Node(prebase.ProtoM21Object, common.SlottedObjectMixin):
+class Node(prebase.ProtoM21Object, SlottedObjectMixin):
     '''
     Abstraction of an unrealized Pitch Node.
 
