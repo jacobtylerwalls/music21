@@ -906,10 +906,10 @@ class Test(unittest.TestCase):
         Flattening the score will leave StaffGroup spanners with parts no longer in the stream.
         '''
         from music21 import corpus
-        from music21 import musicxml
+        from music21.musicxml.m21ToXml import ScoreExporter
         sch = corpus.parse('schoenberg/opus19', 2)
 
-        SX = musicxml.m21ToXml.ScoreExporter(sch.flat)
+        SX = ScoreExporter(sch.flat)
         SX.scorePreliminaries()
         SX.parseFlatScore()
         # Previously, an exception was raised by getRootForPartStaff()
@@ -920,12 +920,12 @@ class Test(unittest.TestCase):
         A derived score should still have joinable groups.
         '''
         from music21 import corpus
-        from music21 import musicxml
+        from music21.musicxml.m21ToXml import ScoreExporter
         s = corpus.parse('demos/two-parts')
 
         m1 = s.measure(1)
         self.assertIn('Score', m1.classes)
-        SX = musicxml.m21ToXml.ScoreExporter(m1)
+        SX = ScoreExporter(m1)
         SX.scorePreliminaries()
         SX.parsePartlikeScore()
         self.assertEqual(len(SX.joinableGroups()), 1)
