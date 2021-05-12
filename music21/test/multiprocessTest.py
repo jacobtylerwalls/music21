@@ -29,7 +29,9 @@ import time
 import unittest
 from typing import Optional, Any
 
-from music21 import __all__
+# This import is for doctest convention of omitting imports
+from music21 import *  # noqa: F403 pylint: disable=wildcard-import, unused-wildcard-import
+
 from music21 import common
 from music21 import environment
 from music21.test import testRunner
