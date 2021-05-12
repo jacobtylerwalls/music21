@@ -503,12 +503,7 @@ class _EnvironmentCore:
         >>> import os
         >>> import sys
         >>> e = environment.Environment()
-        >>> src_dir = e.getDefaultRootTempDir()
-        >>> tgt_dir= pathlib.Path(t) / 'music21'
-        >>> accessible = os.access(tgt_dir, os.R_OK) and os.access(tgt_dir, os.W_OK)
-        >>> if sys.platform.startswith('linux') and not accessible:\
-                tgt_dir = pathlib.Path(t) / f'music21-{os.getuid()}';
-        >>> src_dir == tgt_dir
+        >>> e.getDefaultRootTempDir() == pathlib.Path(t) / 'music21'
         True
 
         If failed to create the subdirectory (OSError is raised), this function
