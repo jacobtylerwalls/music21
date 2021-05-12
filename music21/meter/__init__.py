@@ -13,6 +13,6 @@
 from music21.exceptions21 import TimeSignatureException, MeterException
 from music21.meter.base import TimeSignature, bestTimeSignature, SenzaMisuraTimeSignature
 from music21.meter import core
-from music21.meter import tests
+# from music21.meter import tests
 from music21.meter import tools
 from music21.meter.core import MeterTerminal, MeterSequence
