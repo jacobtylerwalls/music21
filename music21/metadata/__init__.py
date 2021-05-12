@@ -60,7 +60,7 @@ from music21.metadata.primitives import (Date, DateSingle, DateRelative, DateBet
                                          DateSelection, Text, Contributor, Creator,
                                          Imprint, Copyright)
 
-from music21.metadata import testMetadata
+# from music21.metadata import testMetadata
 # -----------------------------------------------------------------------------
 
 __all__ = [
