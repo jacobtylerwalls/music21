@@ -62,7 +62,6 @@ __all__ = [
 
 from music21 import exceptions21
 from music21 import common
-from music21 import stream
 from music21 import musedata as musedataModule
 from music21.metadata import bundles
 from music21 import _version
@@ -1344,6 +1343,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
         pass
 
     def testConversionMusicXml(self):
+        from music21 import stream
+
         c = stream.Score()
 
         from music21.musicxml import testPrimitive
@@ -1395,6 +1396,7 @@ class Test(unittest.TestCase):
         from music21.musicxml import testPrimitive
         from music21 import dynamics
         from music21 import note
+        from music21 import stream
 
         mxString = testPrimitive.pitches01a
         a = parse(mxString)
@@ -1470,6 +1472,7 @@ class Test(unittest.TestCase):
     def testConversionMXChords(self):
         from music21 import chord
         from music21.musicxml import testPrimitive
+        from music21 import stream
 
         mxString = testPrimitive.chordsThreeNotesDuration21c
         a = parse(mxString)
@@ -1596,9 +1599,9 @@ class Test(unittest.TestCase):
         self.assertEqual(len(barlineList), 11)
 
     def testConversionXMLayout(self):
-
         from music21.musicxml import testPrimitive
         from music21 import layout
+        from music21 import stream
 
         a = parse(testPrimitive.systemLayoutTwoPart)
         # a.show()
@@ -1758,8 +1761,8 @@ class Test(unittest.TestCase):
         # s.show()
 
     def testConversionABCOpus(self):
-
         from music21.abcFormat import testFiles
+        from music21 import stream
 
         s = parse(testFiles.theAleWifesDaughter)
         # get a Stream object, not an opus
@@ -1785,6 +1788,8 @@ class Test(unittest.TestCase):
         # s.show()
 
     def testConversionABCWorkFromOpus(self):
+        from music21 import stream
+
         # test giving a work number at loading
         s = corpus.parse('essenFolksong/han1', number=6)
         self.assertIsInstance(s, stream.Score)
