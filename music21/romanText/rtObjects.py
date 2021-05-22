@@ -867,7 +867,7 @@ class RTKey(RTKeyTypeAtom):
 
 class RTAnalyticKey(RTKeyTypeAtom):
     '''An RTAnalyticKey(RTKeyTypeAtom) only defines a change in the key
-    being analyzed.  It does not in itself create a :class:~'music21.key.Key'
+    being analyzed.  It does not in itself create a :class:`~music21.key.Key`
     object.
 
     >>> gMinor = romanText.rtObjects.RTAnalyticKey('g:')
@@ -889,7 +889,7 @@ class RTAnalyticKey(RTKeyTypeAtom):
 class RTKeySignature(RTAtom):
     '''
     An RTKeySignature(RTAtom) only defines a change in the KeySignature.
-    It does not in itself create a :class:~'music21.key.Key' object, nor
+    It does not in itself create a :class:`~music21.key.Key` object, nor
     does it change the analysis taking place.
 
     The number after KS defines the number of sharps (negative for flats).
