@@ -102,7 +102,6 @@ def main(fnAccept=None, strict=False):
         'abstract-class-instantiated',  # this trips on the fractions.Fraction() class.
         'fixme',  # known...
         'superfluous-parens',  # nope -- if they make things clearer...
-        'no-member',  # important, but too many false positives
         'too-many-locals',   # no
         'bad-whitespace',  # maybe later, but "bad" isn't something I necessarily agree with
         'bad-continuation',  # never remove -- this is a good thing many times.
