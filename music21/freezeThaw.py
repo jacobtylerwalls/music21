@@ -934,7 +934,7 @@ class StreamThawer(StreamFreezeThawBase):
                     try:
                         storage = pickle.loads(uncompressed)
                     except AttributeError as e:
-                        common.restoreWindowsAfterUnpickling()
+                        common.restorePathClassesAfterUnpickling()
                         raise FreezeThawException(
                             f'Problem in decoding: {e}'
                         ) from e
