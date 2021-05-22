@@ -259,17 +259,17 @@ class Test(unittest.TestCase):
 
     def xtest015(self):
         '''Calculate harmonic intervals ignoring unisons.'''
-        from collections import defaultdict
         score1 = music21.converter.parse('dichterliebe1.xml')
         monoScore = score1.chordsToNotes()    # returns a new Stream
         unused_notePairs = monoScore.getAllSimultaneousNotes()
         # returns a list of Tuples intervals = interval.generateFromNotePairs(notePairs)
-        intervals2 = defaultdict(lambda: 0)
+        names = []
+        intervals2 = dict.fromkeys(names, 0)
         for thisInt in intervals2:
             if thisInt.name != "P1":
                 intervals2[thisInt.name] += 1
 
-        for key in intervals2.sort(key='simpleName'):
+        for key in intervals2.keys().sort(key='simpleName'):
             print(key, intervals2[key])
 
     def test016(self):
