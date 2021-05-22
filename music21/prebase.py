@@ -252,26 +252,8 @@ class ProtoM21Object:
         >>> p = prebase.ProtoM21Object()
         >>> p._reprInternal()
         'object at 0x112590380'
-
-        If an object has `.id` defined and `x.id` is not the same as `id(x)`
-        then that id is used instead:
-
-        >>> b = base.Music21Object()
-        >>> b._reprInternal()
-        'object at 0x129a903b1'
-        >>> b.id = 'hi'
-        >>> b._reprInternal()
-        'id=hi'
         '''
-        if not hasattr(self, 'id') or self.id == id(self):
-            return f'object at {hex(id(self))}'
-        else:
-            reprId = self.id
-            try:
-                reprId = hex(reprId)
-            except (ValueError, TypeError):
-                pass
-            return f'id={reprId}'
+        return f'object at {hex(id(self))}'
 
 
 del (
@@ -285,11 +267,9 @@ del (
 
 class Test(unittest.TestCase):
     def test_reprInternal(self):
-        from music21.base import Music21Object
-        b = Music21Object()
-        b.id = 'hello'
-        r = repr(b)
-        self.assertEqual(r, '<music21.base.Music21Object id=hello>')
+        p = ProtoM21Object()
+        r = repr(p)
+        self.assertIn('object at ', r)
 
 
 # ---------------------------------------------------------

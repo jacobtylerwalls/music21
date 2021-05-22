@@ -2583,6 +2583,31 @@ class Music21Object(prebase.ProtoM21Object):
                                   subformats=subformats,
                                   **keywords)
 
+    def _reprInternal(self) -> str:
+        '''
+        Defines the insides of the representation.
+        Overload this method for most objects.
+
+        If an object has `.id` defined and `x.id` is not the same as `id(x)`
+        then that id is used instead:
+
+        >>> b = base.Music21Object()
+        >>> b._reprInternal()
+        'object at 0x129a903b1'
+        >>> b.id = 'hi'
+        >>> b._reprInternal()
+        'id=hi'
+        '''
+        if self.id == id(self):
+            return f'object at {hex(id(self))}'
+        else:
+            reprId = self.id
+            try:
+                reprId = hex(reprId)
+            except (ValueError, TypeError):
+                pass
+            return f'id={reprId}'
+
     def _reprText(self, **keywords):
         '''
         Return a text representation possible with line
@@ -5024,6 +5049,12 @@ class Test(unittest.TestCase):
         self.assertEqual(eCopy2.pitch.name, 'F#')
         prev = eCopy2.previous('Note')
         self.assertIs(prev, eCopy1)
+
+    def test_reprInternal(self):
+        b = Music21Object()
+        b.id = 'hello'
+        r = repr(b)
+        self.assertIn('Music21Object id=hello>', r)
 
 
 # ------------------------------------------------------------------------------
