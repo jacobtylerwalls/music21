@@ -12262,7 +12262,7 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
         else:
             returnObj = self.coreCopyAsDerivation('showVariantAsOssialikePart')
             containedPartIndex = self.parts.stream().index(containedPart)
-            returnPart = returnObj.parts[containedPartIndex]
+            returnPart = returnObj.iter.parts[containedPartIndex]
 
         # First build a new part object that is the same length as returnPart
         # but entirely hidden rests.
