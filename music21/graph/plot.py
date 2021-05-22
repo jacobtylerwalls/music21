@@ -46,6 +46,10 @@ from music21 import environment
 _MOD = 'graph.plot'
 environLocal = environment.Environment(_MOD)
 
+# Graph uses setattr, which PyLint can't infer from currently
+# https://github.com/PyCQA/pylint/issues/2878
+# pylint: disable=no-member
+
 
 def _mergeDicts(a, b):
     '''utility function to merge two dictionaries'''

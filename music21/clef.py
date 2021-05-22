@@ -166,6 +166,7 @@ class Clef(base.Music21Object):
     def octaveChange(self, newValue: int):
         oldOctaveChange = self._octaveChange
         self._octaveChange = newValue
+        # pylint: disable=no-member
         if hasattr(self, 'lowestLine') and self.lowestLine is not None:
             self.lowestLine += (newValue - oldOctaveChange) * 7
 
@@ -259,7 +260,7 @@ class Clef(base.Music21Object):
 
         differenceSum = 0
         if hasattr(self, 'lowestLine'):
-            midLine = self.lowestLine + 4
+            midLine = self.lowestLine + 4  # pylint: disable=no-member
         else:
             midLine = 35  # assume TrebleClef-like.
 

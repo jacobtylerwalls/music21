@@ -939,9 +939,11 @@ class NotRest(GeneralNote):
         # environLocal.printDebug(['calling NotRest.__deepcopy__', self])
         new = super().__deepcopy__(memo=memo)
         # after copying, if a Volume exists, it is linked to the old object
-        # look at _volume so as not to create object if not already there
+        # look at _volume so as not to create object if not already
+        # pylint: disable=no-member
         if self._volume is not None:
-            new.volume.client = new  # update with new instance
+            # update with new instance
+            new.volume.client = new
         return new
 
     def __getstate__(self):

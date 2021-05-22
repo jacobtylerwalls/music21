@@ -5132,9 +5132,9 @@ class Chord(note.NotRest):
         '''
         from music21 import scale
         # roman numerals have this built in as the key attribute
-        if hasattr(self, 'key') and self.key is not None:
+        if hasattr(self, 'key') and self.key is not None:  # pylint: disable=no-member
             # Key is a subclass of scale.DiatonicScale
-            sc = self.key
+            sc = self.key  # pylint: disable=no-member
         else:
             sc = self.getContextByClass(scale.Scale, sortByCreationTime=True)
             if sc is None:
