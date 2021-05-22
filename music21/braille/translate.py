@@ -152,6 +152,11 @@ def streamToBraille(music21Stream, **keywords):
     :class:`~music21.stream.Opus` to braille.
 
     Note: generic :class:`~music21.stream.Stream` instances are not supported.
+
+    >>> s = stream.Stream(note.Note())
+    >>> braille.translate.streamToBraille(s)
+    Traceback (most recent call last):
+    music21.braille.translate.BrailleTranslateException: Stream cannot be translated to Braille.
     '''
     if isinstance(music21Stream, stream.Part):
         return partToBraille(music21Stream, **keywords)
