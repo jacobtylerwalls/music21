@@ -2301,7 +2301,7 @@ class IntervalNetwork:
         '''
         # TODO: this always takes the first: need to add weighted selection
         if nodeName is None:  # assume first
-            nodeId = self.getTerminusLowNodes()[0]
+            nodeId = self.terminusLowNodes[0]
         else:
             nodeId = self.nodeNameToNodes(nodeName)[0]
 
@@ -2381,7 +2381,7 @@ class IntervalNetwork:
         '''
         # TODO: this takes the first, need to add probabilistic selection
         if nodeName is None:  # assume first
-            nodeId = self.getTerminusLowNodes()[0]
+            nodeId = self.terminusLowNodes[0]
         else:
             nodeId = self.nodeNameToNodes(nodeName)[0]
 
@@ -2722,7 +2722,7 @@ class IntervalNetwork:
         # these return a Node, not a nodeId
         # TODO: just getting first
         if nodeId is None:  # assume first
-            nodeId = self.getTerminusLowNodes()[0]
+            nodeId = self.terminusLowNodes[0]
         else:
             nodeId = self.nodeNameToNodes(nodeId)[0]
 
@@ -2778,7 +2778,7 @@ class IntervalNetwork:
         '''
         # these return a Node, not a nodeId
         if nodeId is None:  # assume first
-            nodeId = self.getTerminusLowNodes()[0]
+            nodeId = self.terminusLowNodes[0]
         else:
             nodeId = self.nodeNameToNodes(nodeId)[0]
 
