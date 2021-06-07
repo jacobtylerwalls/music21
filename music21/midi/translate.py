@@ -1973,6 +1973,7 @@ def midiTrackToStream(
 
     if conductorPart is not None:
         insertConductorEvents(conductorPart, s, isFirst=isFirst)
+    # TODO: makeNotation.makeUnpitched(s, inPlace=True)
 
     # Only make measures if time signatures have been inserted
     s.makeMeasures(inPlace=True)
