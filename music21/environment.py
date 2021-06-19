@@ -1111,7 +1111,6 @@ class Environment:
         Returns an xmlReaderType depending on the 'musicxmlPath'
 
         >>> a = environment.Environment()
-        >>> original = a['musicxmlPath']  #_DOCS_HIDE
         >>> a['musicxmlPath'] = '/Applications/Musescore.app'
         >>> a.xmlReaderType()
         'Musescore'
@@ -1131,8 +1130,6 @@ class Environment:
         >>> a['musicxmlPath'] = None
         >>> a.xmlReaderType() is None
         True
-
-        >>> a['musicxmlPath'] = original  #_DOCS_HIDE
         '''
         xp = self['musicxmlPath']
         if common.runningUnderIPython():
