@@ -6,6 +6,12 @@ mkdir ~/Desktop
 
 sudo apt-get install -y libpng-dev
 # sudo apt-get install -y python3-pyqt5
+
+# MuseScore
+sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
+sudo apt-get update
+sudo apt-get install musescore3
+
 wget -q https://lilypond.org/download/binaries/linux-64/lilypond-2.22.1-1.linux-64.sh
 sh lilypond-2.22.1-1.linux-64.sh --batch
 export PATH=/home/runner/bin:$PATH

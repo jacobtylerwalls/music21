@@ -129,7 +129,7 @@ def main(testGroup=('test',),
 def ciMain():
     # the main call for ci tests.
     # exits with the returnCode
-    returnCode = main(testGroup=('test', 'external'), verbosity=1, show=False)
+    returnCode = main(testGroup=('test', 'external'), verbosity=1, show=True)
     sys.exit(returnCode)
 
 
