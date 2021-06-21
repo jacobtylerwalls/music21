@@ -36,7 +36,6 @@ __all__ = [
 
 import copy
 import math
-import os
 import pathlib
 import wave
 import warnings
