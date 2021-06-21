@@ -983,6 +983,60 @@ class Test(unittest.TestCase):
         l15 = s7.findConsecutiveNotes()
         self.assertSequenceEqual(l15, [])
 
+        # with voices in a measure
+        m = Measure()
+        m.repeatAppend(note.Note(), 4)
+        m.repeatInsert(note.Note(), [0, 1, 2, 3])
+        m.makeVoices(inPlace=True)
+
+        for i, elem in enumerate(list(m.recurse().notes)):
+            elem.transpose(i, inPlace=True)
+
+        consec = m.findConsecutiveNotes()
+
+        self.assertEqual([repr(x) for x in consec],
+            ['<music21.note.Note C>',
+             '<music21.note.Note C#>',
+             '<music21.note.Note D>',
+             '<music21.note.Note E->',
+             'None',
+             '<music21.note.Note E>',
+             '<music21.note.Note F>',
+             '<music21.note.Note F#>',
+             '<music21.note.Note G>',
+             ]
+        )
+
+        # with voices in each of two measures
+        m.insert(meter.TimeSignature('2/4'))
+        p = Part(m)
+        p.makeMeasures(inPlace=True)
+        for mm in list(p[Measure]):
+            mm.makeVoices(inPlace=True)
+        consec2 = p.findConsecutiveNotes()
+
+        expected2 = ['<music21.note.Note C>',
+                     '<music21.note.Note C#>',
+                     'None',
+                     '<music21.note.Note E>',
+                     '<music21.note.Note F>',
+                     'None',
+                     '<music21.note.Note D>',
+                     '<music21.note.Note E->',
+                     'None',
+                     '<music21.note.Note F#>',
+                     '<music21.note.Note G>',
+                     ]
+
+        self.assertEqual([repr(x) for x in consec2], expected2)
+
+        # with two identical parts
+        p2 = copy.deepcopy(p)
+        s = Score([p, p2])
+        consec3 = s.findConsecutiveNotes()
+
+        self.assertEqual([repr(x) for x in consec3], expected2 + ['None'] + expected2)
+
     def testMelodicIntervals(self):
         c4 = note.Note('C4')
         d5 = note.Note('D5')
@@ -994,6 +1048,8 @@ class Test(unittest.TestCase):
         self.assertEqual(len(intS1), 2)
         M9 = intS1[0]
         self.assertEqual(M9.niceName, 'Major Ninth')
+
+        self.assertIs(M9.noteStart.activeSite, s1)
 
         # Simple chord example
         ch1 = chord.Chord('C4 E4 G4')
@@ -1225,6 +1281,25 @@ class Test(unittest.TestCase):
         self.assertTrue(s.spanners[0].isLast(n4))
         self.assertTrue(s.spanners[1].isFirst(n1))
         self.assertTrue(s.spanners[1].isLast(n3))
+
+    def testStripTiesClearBeaming(self):
+        from music21 import converter
+
+        p = converter.parse('tinyNotation: c2~ c8 c8 c8 c8')
+        p.makeNotation(inPlace=True)
+        self.assertEqual(p.streamStatus.beams, True)
+        p.stripTies(inPlace=True)
+        self.assertEqual(p.streamStatus.beams, False)
+        p = p.splitAtDurations(recurse=True)[0]
+        p.makeBeams(inPlace=True)
+        self.assertEqual([repr(el.beams) for el in p[note.Note]],
+            ['<music21.beam.Beams>',
+             '<music21.beam.Beams <music21.beam.Beam 1/start>>',
+             '<music21.beam.Beams <music21.beam.Beam 1/stop>>',
+             '<music21.beam.Beams <music21.beam.Beam 1/start>>',
+             '<music21.beam.Beams <music21.beam.Beam 1/stop>>'
+             ]
+        )
 
     def testGetElementsByOffsetZeroLength(self):
         '''
@@ -2201,8 +2276,8 @@ class Test(unittest.TestCase):
         s.replace(n4, n1)
         self.assertEqual([s[0], s[1]], [n3, n1])
 
-        error_msg = f'{n3} already in {s}'
-        with self.assertRaises(StreamException, msg=error_msg):
+        expected = f'{n3} already in {s}'
+        with self.assertRaisesRegex(StreamException, expected):
             s.replace(n4, n3)
 
     def testReplaceA1(self):
@@ -5325,6 +5400,16 @@ class Test(unittest.TestCase):
         s = o.getScoreByTitle(re.compile('Pfal(.*)'))
         self.assertEqual(s.metadata.title, 'Es fuhr sich ein Pfalzgraf')
 
+    def testOpusSequence(self):
+        '''
+        Providing a sequence of Scores to an Opus container should append
+        rather than insert each at 0.0.
+        '''
+        s1 = Score(Part(Measure(note.Note())))
+        s2 = Score(Part(Measure(note.Note())))
+        o = Opus([s1, s2])
+        self.assertEqual(o.elementOffset(s2), 1.0)
+
     def testActiveSiteMangling(self):
         outer = Stream()
         inner = Stream()
@@ -6097,8 +6182,8 @@ class Test(unittest.TestCase):
 
         # try imported
         s = corpus.parse('bwv66.6')
-        p = s.iter.getElementsByClass('Part').first()  # for test, not .parts, use .iter
-        m = p.iter.getElementsByClass('Measure')[2]  # for test, not .getElementsByClass('Measure')
+        p = s.getElementsByClass('Part').first()  # for test, not .parts, use .iter()
+        m = p.iter().getElementsByClass(Measure)[2]  # for test, not .getElementsByClass('Measure')
         rn = m[2]
 
         self.assertEqual(id(rn.activeSite), id(m))
@@ -7990,7 +8075,7 @@ class Test(unittest.TestCase):
         with self.assertRaises(StreamException):
             Stream([n, n])
         with self.assertRaises(StreamException):
-            Stream([n, None, s.iter])
+            Stream([n, None, s.iter()])
 
     # REMOVED: Turns out that it DOES have fermata on every note!
     # def testSchoenbergChordifyFermatas(self):
