@@ -37,7 +37,7 @@ class Corpus(prebase.ProtoM21Object):
     __metaclass__ = abc.ABCMeta
 
     # TODO: this is volatile -- should be elsewhere...
-    _acceptableExtensions = ['.abc', '.capx', '.mid', '.midi', '.xml', '.mxl', '.mx',
+    _acceptableExtensions = ['.abc', '.capx', '.mid', '.midi', '.xml', '.mxl',
                              '.musicxml', '.md', '.musedata', '.zip', '.krn', '.rntxt',
                              '.rntext', '.romantext', '.rtxt', '.nwctxt', '.nwc']
 
