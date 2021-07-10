@@ -11,23 +11,7 @@
 '''
 Tests for :mod:`music21.mei.base`.
 '''
-# part of the whole point is to test protect things too
-# pylint: disable=protected-access
 
-# this often happens on TestCase subclasses
-# pylint: disable=too-many-public-methods
-
-# a test that uses only assertions on the Mocks will have no-self-use
-# pylint: disable=no-self-use
-
-# if we mock many things, this may be triggered
-# pylint: disable=too-many-arguments
-
-# pylint is bad at guessing types in these tests---reasonably so
-# pylint: disable=maybe-no-member
-
-# pylint: disable=ungrouped-imports
-# pylint: disable=import-error
 import unittest
 
 # To have working MagicMock objects, we can't use cElementTree even though it would be faster.
@@ -37,7 +21,7 @@ from xml.etree import ElementTree as ETree
 
 from collections import defaultdict
 from fractions import Fraction
-from unittest import mock  # pylint: disable=no-name-in-module
+from unittest import mock
 
 from music21 import articulations
 from music21 import bar
@@ -3555,7 +3539,7 @@ class Test(unittest.TestCase):
         theLayer = [note.Note(quarterLength=1.0) for _ in range(5)]
         expectedDurs = [1.0 for _ in range(5)]
 
-        actual = base._guessTuplets(theLayer)  # pylint: disable=protected-access
+        actual = base._guessTuplets(theLayer)
 
         for i in range(len(expectedDurs)):
             self.assertEqual(expectedDurs[i], actual[i].quarterLength)
@@ -3573,7 +3557,7 @@ class Test(unittest.TestCase):
         theLayer[2].m21TupletNumbase = '2'
         expectedDurs = [Fraction(2, 3), Fraction(2, 3), Fraction(2, 3), 1.0, 1.0]
 
-        actual = base._guessTuplets(theLayer)  # pylint: disable=protected-access
+        actual = base._guessTuplets(theLayer)
 
         for i in range(len(expectedDurs)):
             self.assertEqual(expectedDurs[i], actual[i].quarterLength)
@@ -3595,7 +3579,7 @@ class Test(unittest.TestCase):
         theLayer[3].m21TupletNumbase = '2'
         expectedDurs = [1.0, Fraction(2, 3), Fraction(2, 3), Fraction(2, 3), 1.0]
 
-        actual = base._guessTuplets(theLayer)  # pylint: disable=protected-access
+        actual = base._guessTuplets(theLayer)
 
         for i in range(len(expectedDurs)):
             self.assertEqual(expectedDurs[i], actual[i].quarterLength)
@@ -3617,7 +3601,7 @@ class Test(unittest.TestCase):
         theLayer[4].m21TupletNumbase = '2'
         expectedDurs = [1.0, 1.0, Fraction(2, 3), Fraction(2, 3), Fraction(2, 3)]
 
-        actual = base._guessTuplets(theLayer)  # pylint: disable=protected-access
+        actual = base._guessTuplets(theLayer)
 
         for i in range(len(expectedDurs)):
             self.assertEqual(expectedDurs[i], actual[i].quarterLength)

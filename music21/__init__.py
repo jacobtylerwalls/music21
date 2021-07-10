@@ -191,6 +191,5 @@ from music21.test.testRunner import mainTest  # noqa: E402
 
 # -----------------------------------------------------------------------------
 # this brings all of our own __all__ names into the music21 package namespace
-# pylint: disable=wildcard-import
 from music21 import *  # @UnresolvedImport  # noqa: E402,F403
 

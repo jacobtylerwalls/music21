@@ -387,7 +387,7 @@ class JobProcessor:
 # -----------------------------------------------------------------------------
 
 
-class WorkerProcess(multiprocessing.Process):  # @UndefinedVariable pylint: disable=inherit-non-class
+class WorkerProcess(multiprocessing.Process):  # @UndefinedVariable
     '''
     A worker process for use by the multi-threaded metadata-caching job
     processor.

@@ -1458,7 +1458,7 @@ class Test(unittest.TestCase):
         it was exported from
         the "sibmei" plug-in for Sibelius.
         '''
-        from unittest import mock  # pylint: disable=no-name-in-module
+        from unittest import mock
         with mock.patch('music21.mei.MeiToM21Converter') as mockConv:
             testPath = common.getSourceFilePath() / 'mei' / 'test' / 'notes_in_utf16.mei'
             testConverter = ConverterMEI()
@@ -1469,7 +1469,7 @@ class Test(unittest.TestCase):
         '''
         For the sake of completeness, this is the same as testImportMei3() but with a UTF-8 file.
         '''
-        from unittest import mock  # pylint: disable=no-name-in-module
+        from unittest import mock
         with mock.patch('music21.mei.MeiToM21Converter') as mockConv:
             testPath = common.getSourceFilePath() / 'mei' / 'test' / 'notes_in_utf8.mei'
             testConverter = ConverterMEI()

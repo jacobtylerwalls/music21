@@ -918,7 +918,7 @@ class RTOpenParens(RTAtom):
     <music21.romanText.rtObjects.RTOpenParens '('>
     '''
 
-    def __init__(self, src='(', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src='(', container=None):
         super().__init__(src, container)
 
 
@@ -930,7 +930,7 @@ class RTCloseParens(RTAtom):
     <music21.romanText.rtObjects.RTCloseParens ')'>
     '''
 
-    def __init__(self, src=')', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src=')', container=None):
         super().__init__(src, container)
 
 
@@ -1005,7 +1005,7 @@ class RTPhraseBoundary(RTPhraseMarker):
     <music21.romanText.rtObjects.RTPhraseBoundary '||'>
     '''
 
-    def __init__(self, src='||', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src='||', container=None):
         super().__init__(src, container)
 
 
@@ -1016,7 +1016,7 @@ class RTEllisonStart(RTPhraseMarker):
     <music21.romanText.rtObjects.RTEllisonStart '|*'>
     '''
 
-    def __init__(self, src='|*', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src='|*', container=None):
         super().__init__(src, container)
 
 
@@ -1027,7 +1027,7 @@ class RTEllisonStop(RTPhraseMarker):
     <music21.romanText.rtObjects.RTEllisonStop '*|'>
     '''
 
-    def __init__(self, src='*|', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src='*|', container=None):
         super().__init__(src, container)
 
 
@@ -1046,7 +1046,7 @@ class RTRepeatStart(RTRepeat):
     <music21.romanText.rtObjects.RTRepeatStart ...'||:'>
     '''
 
-    def __init__(self, src='||:', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src='||:', container=None):
         super().__init__(src, container)
 
 
@@ -1057,7 +1057,7 @@ class RTRepeatStop(RTRepeat):
     <music21.romanText.rtObjects.RTRepeatStop ...':||'>
     '''
 
-    def __init__(self, src=':||', container=None):  # pylint: disable=useless-super-delegation
+    def __init__(self, src=':||', container=None):
         super().__init__(src, container)
 
 

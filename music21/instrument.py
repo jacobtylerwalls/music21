@@ -2380,7 +2380,6 @@ def fromString(instrumentString):
     <music21.instrument.Choir 'Choir (Aahs)'>
 
     '''
-    # pylint: disable=undefined-variable
     from music21.languageExcerpts import instrumentLookup
 
     instrumentStringOrig = instrumentString

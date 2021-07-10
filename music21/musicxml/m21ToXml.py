@@ -5776,7 +5776,6 @@ class MeasureExporter(XMLExporterBase):
         if mxMeasureStyle is not None:
             mxAttributes.append(mxMeasureStyle)
 
-        # pylint: disable=len-as-condition
         if len(mxAttributes) > 0 or mxAttributes.attrib:
             self.xmlRoot.append(mxAttributes)
         return mxAttributes
@@ -6276,7 +6275,6 @@ class MeasureExporter(XMLExporterBase):
 # ------------------------------------------------------------------------------
 def indent(elem, level=0):
     i = '\n' + level * '  '
-    # pylint: disable=len-as-condition
     if len(elem):
         if not elem.text or not elem.text.strip():
             elem.text = i + '  '

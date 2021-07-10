@@ -256,7 +256,6 @@ class Metadata(base.Music21Object):
          ('localeOfComposition', 'Rome'),
          ('movementName', 'Sonata da Chiesa, No. I (opus 3, no. 1)')]
         '''
-        # pylint: disable=undefined-variable
         allOut = {}
 
         searchAttributes = self.searchAttributes

@@ -603,7 +603,7 @@ class Music21Object(prebase.ProtoM21Object):
 
     def __setstate__(self, state: Dict[str, Any]):
         # defining self.__dict__ upon initialization currently breaks everything
-        self.__dict__ = state  # pylint: disable=attribute-defined-outside-init
+        self.__dict__ = state
 
     # --------------------------------------------------------------------------
 
@@ -2896,7 +2896,7 @@ class Music21Object(prebase.ProtoM21Object):
         for listType in ('expressions', 'articulations'):
             if hasattr(e, listType):
                 temp = getattr(e, listType)
-                setattr(e, listType, [])  # pylint: disable=attribute-defined-outside-init
+                setattr(e, listType, [])
                 setattr(eRemain, listType, [])
                 for thisExpression in temp:  # using thisExpression as a shortcut for expr or art.
                     if hasattr(thisExpression, 'splitClient'):  # special method (see Trill)

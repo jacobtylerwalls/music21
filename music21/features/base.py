@@ -1644,7 +1644,7 @@ class Test(unittest.TestCase):
 #     def xtestOrangeBayesA(self):  # pragma: no cover
 #         '''Using an already created test file with a BayesLearner.
 #         '''
-#         import orange # @UnresolvedImport  # pylint: disable=import-error
+#         import orange # @UnresolvedImport
 #         data = orange.ExampleTable(
 #             '~/music21Ext/mlDataSets/bachMonteverdi-a/bachMonteverdi-a.tab')
 #         classifier = orange.BayesLearner(data)
@@ -1656,7 +1656,7 @@ class Test(unittest.TestCase):
 #     def xtestClassifiersA(self):  # pragma: no cover
 #         '''Using an already created test file with a BayesLearner.
 #         '''
-#         import orange, orngTree # @UnresolvedImport  # pylint: disable=import-error
+#         import orange, orngTree # @UnresolvedImport
 #         data1 = orange.ExampleTable(
 #                 '~/music21Ext/mlDataSets/chinaMitteleuropa-b/chinaMitteleuropa-b1.tab')
 #
@@ -1696,7 +1696,7 @@ class Test(unittest.TestCase):
 #     def xtestClassifiersB(self):  # pragma: no cover
 #         '''Using an already created test file with a BayesLearner.
 #         '''
-#         import orange, orngTree # @UnresolvedImport  # pylint: disable=import-error
+#         import orange, orngTree # @UnresolvedImport
 #         data1 = orange.ExampleTable(
 #                 '~/music21Ext/mlDataSets/chinaMitteleuropa-b/chinaMitteleuropa-b1.tab')
 #
@@ -1742,7 +1742,7 @@ class Test(unittest.TestCase):
 #         This test shows how to compare four classifiers; replace the file path
 #         with a path to the .tab data file.
 #         '''
-#         import orange, orngTree # @UnresolvedImport  # pylint: disable=import-error
+#         import orange, orngTree # @UnresolvedImport
 #         data = orange.ExampleTable(
 #             '~/music21Ext/mlDataSets/bachMonteverdi-a/bachMonteverdi-a.tab')
 #
@@ -1774,7 +1774,7 @@ class Test(unittest.TestCase):
 #
 #
 #     def xtestOrangeClassifierTreeLearner(self):  # pragma: no cover
-#         import orange, orngTree # @UnresolvedImport  # pylint: disable=import-error
+#         import orange, orngTree # @UnresolvedImport
 #         data = orange.ExampleTable(
 #             '~/music21Ext/mlDataSets/bachMonteverdi-a/bachMonteverdi-a.tab')
 #

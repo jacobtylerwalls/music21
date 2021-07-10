@@ -3011,7 +3011,6 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
 
         Changed in v7. -- all but quarterLength are keyword only
         '''
-        # pylint: disable=attribute-defined-outside-init
         quarterLength = opFrac(quarterLength)
         if retainOrigin:
             sLeft = self
@@ -12035,7 +12034,7 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
             classList = None
         else:
             for e in returnObj.elements:
-                if type(e) not in classList:  # pylint: disable=unidiomatic-typecheck
+                if type(e) not in classList:
                     classList.append(type(e))
             for c in exemptClasses:
                 if c in classList:

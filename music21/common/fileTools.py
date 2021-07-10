@@ -62,7 +62,7 @@ def readPickleGzip(filePath: Union[str, pathlib.Path]) -> Any:
         try:
             uncompressed = pickledFile.read()
             newMdb = pickle.loads(uncompressed)
-        except Exception as e:  # pylint: disable=broad-except
+        except Exception as e:
             # pickle exceptions cannot be caught directly
             # because they might come from pickle or _pickle and the latter cannot
             # be caught.

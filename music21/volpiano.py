@@ -295,7 +295,7 @@ def toPart(volpianoText, *, breaksToLayout=False):
 
     if continuousNumberOfBreakTokens > 0:
         breakClass = classByNumBreakTokens[continuousNumberOfBreakTokens]
-        breakToken = breakClass()  # pylint: disable=not-callable
+        breakToken = breakClass()
         currentMeasure.append(breakToken)
 
     if m:

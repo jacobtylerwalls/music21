@@ -365,7 +365,7 @@ class PartTranslator:
         for t in tokens:
             try:
                 self.translateOneLineToken(t)
-            except Exception:  # pylint: disable=broad-except
+            except Exception:
                 tracebackMessage = traceback.format_exc()
                 raise RomanTextTranslateException(
                     f'At line {t.lineNumber} for token {t}, '

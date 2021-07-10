@@ -839,7 +839,7 @@ class WindowedAnalysis(primitives.GraphColorGrid, PlotStreamMixin):
         if not self.processorClass:
             return None
         if not self._processor:
-            self._processor = self.processorClass(self.streamObj)  # pylint: disable=not-callable
+            self._processor = self.processorClass(self.streamObj)
         return self._processor
 
     def run(self, *args, **keywords):

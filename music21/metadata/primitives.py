@@ -328,7 +328,6 @@ class Date(prebase.ProtoM21Object):
         Traceback (most recent call last):
         TypeError: ...argument 'day' (pos 3)...
         '''
-        # pylint: disable=no-value-for-parameter
         post = []
         # order here is order for datetime
         # TODO: need defaults for incomplete times.
@@ -522,7 +521,7 @@ class DateRelative(DateSingle):
 
     # INITIALIZER #
 
-    def __init__(self, data='', relevance='after'):  # pylint: disable=useless-super-delegation
+    def __init__(self, data='', relevance='after'):
         super().__init__(data, relevance)
 
     # PUBLIC PROPERTIES #
@@ -660,7 +659,7 @@ class DateSelection(DateSingle):
 
     def __init__(self,
                  data: Optional[Iterable[str]] = None,
-                 relevance='or'):  # pylint: disable=useless-super-delegation
+                 relevance='or'):
         super().__init__(data, relevance)
 
     # SPECIAL METHODS #

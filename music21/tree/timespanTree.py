@@ -780,7 +780,6 @@ class Test(unittest.TestCase):
                                  max(x.endTime for x in currentTimespansInList))
                 self.assertEqual(tsTree.lowestPosition(), currentPosition)
                 self.assertEqual(tsTree.endTime, currentEndTime)
-                # pylint: disable=consider-using-enumerate
                 for j in range(len(currentTimespansInTree)):
                     self.assertEqual(currentTimespansInList[j], currentTimespansInTree[j])
 
@@ -803,7 +802,6 @@ class Test(unittest.TestCase):
                                      max(x.endTime for x in currentTimespansInList))
                     self.assertEqual(tsTree.lowestPosition(), currentPosition)
                     self.assertEqual(tsTree.endTime, currentEndTime)
-                    # pylint: disable=consider-using-enumerate
                     for i in range(len(currentTimespansInTree)):
                         self.assertEqual(currentTimespansInList[i], currentTimespansInTree[i])
 # -----------------------------------------------------------------------------

@@ -103,7 +103,6 @@ def runParallel(iterable, parallelFunction, *,
     [99, 11, 123]
     '''
     # multiprocessing has trouble with introspection
-    # pylint: disable=not-callable
     numCpus = cpus()
 
     if numCpus == 1 or multiprocessing.current_process().daemon:

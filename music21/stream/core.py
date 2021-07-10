@@ -34,7 +34,6 @@ from music21 import tree
 from music21.exceptions21 import StreamException, ImmutableStreamException
 from music21.stream.iterator import StreamIterator
 
-# pylint: disable=attribute-defined-outside-init
 class StreamCoreMixin:
     '''
     Core aspects of a Stream's behavior.  Any of these can change at any time.
