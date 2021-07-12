@@ -1830,7 +1830,7 @@ class PartParser(XMLParserBase):
         self.staffReferenceList.append(measureParser.staffReference)
 
         m = measureParser.stream
-        self.setLastMeasureInfo(m)
+        self.setLastMeasureInfo(m, measureParser)
         # TODO: move this into the measure parsing,
         #     because it should happen on a voice level.
         if measureParser.fullMeasureRest is True:
@@ -1897,7 +1897,7 @@ class PartParser(XMLParserBase):
         self.activeInstrument.transposition = newTransposition
         self.atSoundingPitch = False
 
-    def setLastMeasureInfo(self, m):
+    def setLastMeasureInfo(self, m, measureParser):
         # noinspection PyShadowingNames
         '''
         Sets self.lastMeasureNumber and self.lastMeasureSuffix from the measure,
@@ -1971,8 +1971,8 @@ class PartParser(XMLParserBase):
             self.lastMeasureNumber = m.number
             self.lastNumberSuffix = m.numberSuffix
 
-        if m.timeSignature is not None:
-            self.lastTimeSignature = m.timeSignature
+        if measureParser.timeSignature is not None:
+            self.lastTimeSignature = measureParser.timeSignature
         elif self.lastTimeSignature is None:
             # if no time signature is defined, need to get a default
             ts = meter.TimeSignature('4/4')
@@ -2199,6 +2199,8 @@ class MeasureParser(XMLParserBase):
         self.mxNoteList = []  # for accumulating notes in chords
         self.mxLyricList = []  # for accumulating lyrics assigned to chords
         self.nLast = None  # for adding notes to spanners.
+
+        self.timeSignature: Optional[meter.TimeSignature] = None
 
         # Sibelius 7.1 only puts a <voice> tag on the
         # first note of a chord, and MuseScore doesn't put one
@@ -5135,6 +5137,9 @@ class MeasureParser(XMLParserBase):
         '''
         ts = self.xmlToTimeSignature(mxTime)
         if ts is not None:
+            if self.timeSignature is None:
+                # store first TS only
+                self.timeSignature = ts
             self.insertCoreAndRef(self.offsetMeasureNote, mxTime, ts)
 
     def xmlToTimeSignature(self, mxTime):
