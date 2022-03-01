@@ -12,7 +12,7 @@
 '''
 If it doesn't fit anywhere else in the common directory, you'll find it here...
 '''
-from typing import Tuple, List, Iterable, Optional, Callable
+from typing import Any, Tuple, List, Iterable, Optional, Callable
 import platform
 import re
 
@@ -165,9 +165,9 @@ def macOSVersion() -> Tuple[int, int, int]:  # pragma: no cover
     return (major, minor, maintenance)
 
 
-def sortModules(moduleList) -> List[str]:
+def sortModules(moduleList: Iterable[Any]) -> List[object]:
     '''
-    Sort a lost of imported module names such that most recently modified is
+    Sort a list of imported module names such that most recently modified is
     first.  In ties, last access time is used then module name
 
     Will return a different order each time depending on the last mod time
@@ -205,8 +205,7 @@ def runningUnderIPython() -> bool:
 
     This post:
 
-    http://stackoverflow.com/questions/15411967/
-    how-can-i-check-if-code-is-executed-in-the-ipython-notebook
+    https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook
 
     says not to do this, but really, I can't think of another way
     to have different output as default.
@@ -228,7 +227,7 @@ def runningUnderIPython() -> bool:
 # ------------------------------------------------------------------------------
 def defaultDeepcopy(obj, memo, callInit=True):
     '''
-    Unfortunately, it is not possible to do something like:
+    Unfortunately, it is not possible to do something like::
 
         def __deepcopy__(self, memo):
             if self._noDeepcopy:
@@ -238,7 +237,7 @@ def defaultDeepcopy(obj, memo, callInit=True):
 
     Or, else: return NotImplemented
 
-    so that's what this is for:
+    so that's what this is for::
 
         def __deepcopy__(self, memo):
             if self._noDeepcopy:

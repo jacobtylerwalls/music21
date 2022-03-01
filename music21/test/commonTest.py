@@ -28,7 +28,7 @@ from music21 import common
 with warnings.catch_warnings():
     warnings.simplefilter('ignore', DeprecationWarning)
     warnings.simplefilter('ignore', PendingDeprecationWarning)
-    import imp
+    import imp  # pylint: disable=deprecated-module
 
 
 environLocal = environment.Environment('test.commonTest')
@@ -39,13 +39,14 @@ def testImports():
     '''
     Test that all optional packages needed for test suites are installed
     '''
+    # pylint: disable=unused-import
     try:
-        import scipy  # pylint: disable=unused-import
+        import scipy  # type: ignore
     except ImportError as e:
         raise ImportError('pip install scipy : needed for running test suites') from e
 
     try:
-        from Levenshtein import StringMatcher  # pylint: disable=unused-import
+        from Levenshtein import StringMatcher  # type: ignore
     except ImportError as e:
         raise ImportError('pip install python-Levenshtein : needed for running test suites') from e
 
@@ -271,7 +272,7 @@ class ModuleGather:
         for dirPath, unused_dirNames, filenames in os.walk(self.dirParent):
             self._visitFunc(None, dirPath, filenames)
 
-        if common.cpus() > 4:  # @UndefinedVariable
+        if common.cpus() > 4:
             self.modulePaths.sort(key=manyCoreSortFunc)
         else:
             self.modulePaths.sort()

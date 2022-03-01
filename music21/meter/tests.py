@@ -21,12 +21,15 @@ from music21 import stream
 from music21.meter.base import TimeSignature
 from music21.meter.core import MeterSequence, MeterTerminal
 
-class TestExternal(unittest.TestCase):  # pragma: no cover
+class TestExternal(unittest.TestCase):
+    show = True
+
     def testSingle(self):
         '''Need to test direct meter creation w/o stream
         '''
         a = TimeSignature('3/16')
-        a.show()
+        if self.show:
+            a.show()
 
     def testBasic(self):
         a = stream.Stream()
@@ -36,14 +39,15 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
                 m = stream.Measure()
                 m.timeSignature = ts
                 a.insert(m.timeSignature.barDuration.quarterLength, m)
-        a.show()
+        if self.show:
+            a.show()
 
     def testCompound(self):
         a = stream.Stream()
         meterStrDenominator = [1, 2, 4, 8, 16, 32]
         meterStrNumerator = [2, 3, 4, 5, 6, 7, 9, 11, 12, 13]
 
-        for i in range(30):
+        for i in range(8):
             msg = []
             for j in range(1, random.choice([2, 4])):
                 msg.append('%s/%s' % (random.choice(meterStrNumerator),
@@ -52,7 +56,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
             m = stream.Measure()
             m.timeSignature = ts
             a.insert(m.timeSignature.barDuration.quarterLength, m)
-        a.show()
+        if self.show:
+            a.show()
 
     def testMeterBeam(self):
         ts = TimeSignature('6/8', 2)
@@ -63,7 +68,8 @@ class TestExternal(unittest.TestCase):  # pragma: no cover
             n = note.Note()
             n.duration = x
             s.append(n)
-        s.show()
+        if self.show:
+            s.show()
 
 
 class Test(unittest.TestCase):
@@ -382,6 +388,9 @@ class Test(unittest.TestCase):
                       0.5, 0.125, 0.25, 0.125, 0.25, 0.125,
                       0.5, 0.125, 0.25, 0.125, 0.25, 0.125]),
 
+            ('3/8', [1.0, 0.125, 0.25, 0.125, 0.5, 0.125,
+                     0.25, 0.125, 0.5, 0.125, 0.25, 0.125]),
+
             ('11/8',
              [1.0, 0.125, 0.25, 0.125,
               0.5, 0.125, 0.25, 0.125,
@@ -492,9 +501,9 @@ class Test(unittest.TestCase):
 
     def testMixedDurationBeams2(self):
         from music21 import converter
-        bm = converter.parse('tinyNotation: 3/8 b8 c16 r e. d32').flat
+        bm = converter.parse('tinyNotation: 3/8 b8 c16 r e. d32').flatten()
         bm2 = bm.makeNotation()
-        beamList = [n.beams for n in bm2.flat.notes]
+        beamList = [n.beams for n in bm2.recurse().notes]
         self.assertEqual(
             [repr(b) for b in beamList],
             ['<music21.beam.Beams <music21.beam.Beam 1/start>>',
@@ -506,7 +515,7 @@ class Test(unittest.TestCase):
 
         bm = converter.parse("tinyNotation: 2/4 b16 c' b a g f# g r")
         bm2 = bm.makeNotation()
-        beamList = [n.beams for n in bm2.flat.notes]
+        beamList = [n.beams for n in bm2.recurse().notes]
         beamListRepr = [str(i) + ' ' + repr(beamList[i]) for i in range(len(beamList))]
         self.maxDiff = 2000
         self.assertEqual(beamListRepr, [
@@ -522,7 +531,7 @@ class Test(unittest.TestCase):
     def testBestTimeSignature(self):
         from music21 import converter
         from music21 import meter
-        s6 = converter.parse('C4 D16.', format='tinyNotation').flat.notes
+        s6 = converter.parse('C4 D16.', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
@@ -552,21 +561,21 @@ class Test(unittest.TestCase):
         from music21 import converter
         from music21 import meter
 
-        s6 = converter.parse('C4.', format='tinyNotation').flat.notes
+        s6 = converter.parse('C4.', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
         ts6 = meter.bestTimeSignature(m6)
         self.assertEqual(repr(ts6), '<music21.meter.TimeSignature 3/8>')
 
-        s6 = converter.parse('C2..', format='tinyNotation').flat.notes
+        s6 = converter.parse('C2..', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
         ts6 = meter.bestTimeSignature(m6)
         self.assertEqual(repr(ts6), '<music21.meter.TimeSignature 7/8>')
 
-        s6 = converter.parse('C2...', format='tinyNotation').flat.notes
+        s6 = converter.parse('C2...', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
@@ -580,14 +589,14 @@ class Test(unittest.TestCase):
         '''
         from music21 import converter
         from music21 import meter
-        s6 = converter.parse('C2 D4 E8', format='tinyNotation').flat.notes
+        s6 = converter.parse('C2 D4 E8', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
         ts6 = meter.bestTimeSignature(m6)
         self.assertEqual(repr(ts6), '<music21.meter.TimeSignature 7/8>')
 
-        s6 = converter.parse('C2 D4 E8 F16', format='tinyNotation').flat.notes
+        s6 = converter.parse('C2 D4 E8 F16', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
@@ -602,14 +611,14 @@ class Test(unittest.TestCase):
         from music21 import converter
         from music21 import meter
 
-        s6 = converter.parse('C4.. D4..', format='tinyNotation').flat.notes
+        s6 = converter.parse('C4.. D4..', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
         ts6 = meter.bestTimeSignature(m6)
         self.assertEqual(repr(ts6), '<music21.meter.TimeSignature 7/8>')
 
-        s6 = converter.parse('C4... D4...', format='tinyNotation').flat.notes
+        s6 = converter.parse('C4... D4...', format='tinyNotation').flatten().notes
         m6 = stream.Measure()
         for el in s6:
             m6.insert(el.offset, el)
