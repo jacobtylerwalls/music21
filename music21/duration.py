@@ -692,6 +692,7 @@ def quarterConversion(qLen: OffsetQLIn) -> QuarterLengthConversion:
     # is it built up of many small types?
     components = [durationTupleFromTypeDots(closestSmallerType, 0)]
     # remove the largest type out there and keep going.
+
     qLenRemainder = opFrac(qLen - typeToDuration[closestSmallerType])
 
     # one opportunity to define a tuplet if remainder can be expressed as one

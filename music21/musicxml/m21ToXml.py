@@ -454,7 +454,6 @@ class GeneralObjectExporter:
                 'Cannot translate the object '
                 + f'{self.generalObj} to a complete musicXML document; put it in a Stream first!'
             )
-        unused_tuple = outObj.splitAtDurations(recurse=True)
         return outObj
 
     def fromScore(self, sc):
@@ -3522,10 +3521,15 @@ class MeasureExporter(XMLExporterBase):
         >>> nComplex = note.Note()
         >>> nComplex.duration.quarterLength = 5.0
         >>> mxComplex = MEX.noteToXml(nComplex)
-        Traceback (most recent call last):
-        music21.musicxml.xmlObjects.MusicXMLExportException:
-            complex duration encountered:
-            failure to run myStream.splitAtDurations() first
+        >>> MEX.dump(mxComplex)
+        <note>
+          <pitch>
+            <step>C</step>
+            <octave>4</octave>
+          </pitch>
+          <duration>50400</duration>
+          <type>complex</type>
+        </note>
 
         TODO: Test with spanners...
 
@@ -3559,10 +3563,7 @@ class MeasureExporter(XMLExporterBase):
         _synchronizeIds(mxNote, n)
 
         d = chordOrN.duration
-        if d.type == 'complex':
-            raise MusicXMLExportException(
-                'complex duration encountered: '
-                'failure to run myStream.splitAtDurations() first')
+
         if d.isGrace is True:
             graceElement = SubElement(mxNote, 'grace')
             try:
@@ -6958,9 +6959,10 @@ class Test(unittest.TestCase):
     def testTupletBracketsMadeOnComponents(self):
         s = stream.Stream()
         s.insert(0, note.Note(quarterLength=(5 / 6)))
-        # 3 sixteenth-tuplets, 2 sixteenth-tuplets
+        tree = self.getET(s)
+        # 3 sixteenth-triplets + 2 sixteenth-triplets
         # tuplet start, tuplet stop, tuplet start, tuplet stop
-        self.assertEqual(self.getXml(s).count('<tuplet '), 4)
+        self.assertEqual(len(tree.findall('.//tuplet')), 4)
 
     def testFullMeasureRest(self):
         from music21 import converter

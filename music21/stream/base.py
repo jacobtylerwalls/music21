@@ -2931,7 +2931,6 @@ class Stream(core.StreamCoreMixin, base.Music21Object):
         '''
 
         def processContainer(container: Stream):
-            anyComplexObject: bool = False
             for complexObj in container.getElementsNotOfClass(['Stream', 'Variant', 'Spanner']):
                 if complexObj.duration.type != 'complex':
                     continue
