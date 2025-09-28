@@ -46,9 +46,7 @@ dependencies = [
     "chardet",
     "joblib",
     "jsonpickle",
-    "matplotlib",
     "more_itertools",
-    "numpy>=1.26.4",
     "requests",
     "webcolors>=1.5",
 ]
