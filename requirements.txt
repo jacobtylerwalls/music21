@@ -1,8 +1,5 @@
 chardet
 joblib
-jsonpickle
-matplotlib
-more_itertools
-numpy>=1.26.4
-webcolors>=1.5
+more-itertools
 requests
+webcolors>=1.5
