@@ -2252,8 +2252,8 @@ class PartParser(XMLParserBase):
             else:
                 mOffsetShift = lastTimeSignatureQuarterLength
                 warnings.warn(
-                    f'Warning: measure {m.number} in part {self.stream.partName}'
-                    f'is overfull: {mHighestTime} > {lastTimeSignatureQuarterLength},'
+                    f'Warning: measure {m.number} in part {self.stream.partName} '
+                    f'is overfull: {mHighestTime} > {lastTimeSignatureQuarterLength}, '
                     f'assuming {mOffsetShift} is correct.',
                     MusicXMLWarning,
                     stacklevel=2,
